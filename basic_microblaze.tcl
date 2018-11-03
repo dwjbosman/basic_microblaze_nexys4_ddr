@@ -130,7 +130,9 @@ set obj [get_filesets sources_1]
 # Add local files from the original project (-no_copy_sources specified)
 set files [list \
  [file normalize "${origin_dir}/src/blockdesign/mb_design/mb_design.bd" ]\
+ [file normalize "${origin_dir}/src/blockdesign/mb_design/hdl/mb_design_wrapper.vhd" ]\
  [file normalize "${origin_dir}/src/blockdesign/mb_design/ip/mb_design_mig_7series_0_0/mig_a.prj" ]\
+ [file normalize "${origin_dir}/src/blockdesign/mb_design/ip/mb_design_mig_7series_0_0/mig_b.prj" ]\
 ]
 set added_files [add_files -fileset sources_1 $files]
 
@@ -142,13 +144,22 @@ set file "mb_design/mb_design.bd"
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "registered_with_manager" -value "1" -objects $file_obj
 
+set file "hdl/mb_design_wrapper.vhd"
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property -name "file_type" -value "VHDL" -objects $file_obj
+
 set file "mb_design_mig_7series_0_0/mig_a.prj"
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property -name "scoped_to_cells" -value "mb_design_mig_7series_0_0" -objects $file_obj
+
+set file "mb_design_mig_7series_0_0/mig_b.prj"
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "scoped_to_cells" -value "mb_design_mig_7series_0_0" -objects $file_obj
 
 
 # Set 'sources_1' fileset properties
 set obj [get_filesets sources_1]
+set_property -name "top" -value "mb_design_wrapper" -objects $obj
 
 # Create 'constrs_1' fileset (if not found)
 if {[string equal [get_filesets -quiet constrs_1] ""]} {
@@ -179,6 +190,8 @@ set obj [get_filesets sim_1]
 
 # Set 'sim_1' fileset properties
 set obj [get_filesets sim_1]
+set_property -name "top" -value "mb_design_wrapper" -objects $obj
+set_property -name "top_lib" -value "xil_defaultlib" -objects $obj
 
 # Create 'synth_1' run (if not found)
 if {[string equal [get_runs -quiet synth_1] ""]} {

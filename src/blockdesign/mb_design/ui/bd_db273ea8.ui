@@ -8,7 +8,7 @@ preplace port ETH_RST_N -pg 1 -y -60 -defaultsOSRD
 preplace port DDR2 -pg 1 -y 230 -defaultsOSRD
 preplace port reset_n -pg 1 -y 0 -defaultsOSRD
 preplace port MDIO -pg 1 -y -140 -defaultsOSRD
-preplace port CLK100MHZ -pg 1 -y -20 -defaultsOSRD
+preplace port CLK100MHZ -pg 1 -y 90 -defaultsOSRD
 preplace port QSPI_FLASH -pg 1 -y 60 -defaultsOSRD
 preplace port RMII_PHY_M -pg 1 -y -120 -defaultsOSRD
 preplace port GPIO -pg 1 -y -620 -defaultsOSRD
@@ -34,13 +34,13 @@ preplace netloc smartconnect_0_M01_AXI 1 5 1 2040
 preplace netloc mig_7series_0_mmcm_locked 1 3 4 1260 380 NJ 380 NJ 380 2400
 preplace netloc mig_7series_0_DDR2 1 6 2 NJ 230 NJ
 preplace netloc axi_ethernetlite_0_MDIO 1 6 2 2440J -180 2670J
-preplace netloc CLK_IN1_D_0_1 1 0 3 NJ -20 N -20 680
+preplace netloc CLK_IN1_D_0_1 1 0 3 NJ 90 N 90 N
 preplace netloc microblaze_0_intr 1 1 1 N
 preplace netloc smartconnect_0_M03_AXI 1 5 1 2060
 preplace netloc microblaze_0_Clk 1 1 5 360 -500 690 -510 1230 -350 1710 -270 2050
 preplace netloc smartconnect_0_M04_AXI 1 5 1 2100
-preplace netloc microblaze_0_interrupt 1 2 1 670J
-preplace netloc resetn_0_1 1 0 6 NJ 0 N 0 700 0 1240 80 N 80 2030
+preplace netloc microblaze_0_interrupt 1 2 1 680J
+preplace netloc resetn_0_1 1 0 6 NJ 0 N 0 680 0 1240 80 N 80 2030
 preplace netloc microblaze_0_M_AXI_DC 1 3 2 NJ -380 1690
 preplace netloc microblaze_0_M_AXI_DP 1 3 2 NJ -400 1680
 preplace netloc microblaze_0_ilmb_1 1 3 1 1220
@@ -54,7 +54,7 @@ preplace netloc rst_clk_wiz_1_100M_interconnect_aresetn 1 4 1 1720
 preplace netloc rst_clk_wiz_1_100M_bus_struct_reset 1 3 2 1240 -550 1670
 preplace netloc microblaze_0_M_AXI_IC 1 3 2 NJ -360 1700
 preplace netloc rst_clk_wiz_1_100M_peripheral_aresetn 1 1 5 380 -90 NJ -90 NJ -90 1690 -150 2110
-preplace netloc rst_clk_wiz_1_100M_mb_reset 1 1 4 370J -490 680J -300 NJ -300 1660
+preplace netloc rst_clk_wiz_1_100M_mb_reset 1 1 4 370J -490 670J -300 NJ -300 1660
 preplace netloc clk_wiz_1_locked 1 3 1 1250
 preplace netloc axi_uartlite_0_UART 1 6 2 N -490 2670
 preplace netloc axi_gpio_0_GPIO 1 6 2 N -640 2670

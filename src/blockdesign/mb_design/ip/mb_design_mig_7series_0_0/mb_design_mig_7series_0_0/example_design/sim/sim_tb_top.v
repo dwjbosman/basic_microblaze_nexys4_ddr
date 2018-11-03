@@ -136,7 +136,7 @@ module sim_tb_top;
    // The following parameters are multiplier and divisor factors for PLLE2.
    // Based on the selected design frequency these parameters vary.
    //***************************************************************************
-   parameter CLKIN_PERIOD          = -2147483647;
+   parameter CLKIN_PERIOD          = 10000;
                                      // Input Clock Period
 
    //***************************************************************************
@@ -188,7 +188,7 @@ module sim_tb_top;
                                              // Width of WDATA and RDATA on SI slot.
                                              // Must be <= APP_DATA_WIDTH.
                                              // # = 32, 64, 128, 256.
-   parameter C_S_AXI_SUPPORTS_NARROW_BURST = 1;
+   parameter C_S_AXI_SUPPORTS_NARROW_BURST = 0;
                                              // Indicates whether to instatiate upsizer
                                              // Range: 0, 1
 

@@ -25,7 +25,7 @@
         <TimePeriod>3077</TimePeriod>
         <VccAuxIO>1.8V</VccAuxIO>
         <PHYRatio>4:1</PHYRatio>
-        <InputClkFreq></InputClkFreq>
+        <InputClkFreq>99.997</InputClkFreq>
         <UIExtraClocks>0</UIExtraClocks>
         <MMCM_VCO>1200</MMCM_VCO>
         <MMCMClkOut0> 1.000</MMCMClkOut0>
@@ -125,7 +125,7 @@
             <C0_S_AXI_ADDR_WIDTH>27</C0_S_AXI_ADDR_WIDTH>
             <C0_S_AXI_DATA_WIDTH>128</C0_S_AXI_DATA_WIDTH>
             <C0_S_AXI_ID_WIDTH>4</C0_S_AXI_ID_WIDTH>
-            <C0_S_AXI_SUPPORTS_NARROW_BURST>1</C0_S_AXI_SUPPORTS_NARROW_BURST>
+            <C0_S_AXI_SUPPORTS_NARROW_BURST>0</C0_S_AXI_SUPPORTS_NARROW_BURST>
         </AXIParameters>
     </Controller>
 
