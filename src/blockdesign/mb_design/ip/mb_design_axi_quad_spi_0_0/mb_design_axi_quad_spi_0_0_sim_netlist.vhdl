@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
--- Date        : Fri Nov  2 23:34:44 2018
+-- Date        : Sat Nov  3 22:52:21 2018
 -- Host        : dinne-Aspire-VN7-593G running 64-bit Ubuntu 16.04.4 LTS
 -- Command     : write_vhdl -force -mode funcsim
 --               /home/dinne/Xilinx/projects/basic_microblaze/src/blockdesign/mb_design/ip/mb_design_axi_quad_spi_0_0/mb_design_axi_quad_spi_0_0_sim_netlist.vhdl
@@ -549,7 +549,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity mb_design_axi_quad_spi_0_0_cdc_sync is
   port (
     \FIFO_EXISTS.DUAL_MD_INTR_GEN.SPISR_0_CMD_Error_d1_reg\ : out STD_LOGIC;
-    \QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_reg\ : in STD_LOGIC;
+    \QSPI_LOOK_UP_MODE_2_MEMORY_1.CMD_decoded_int_reg\ : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -583,7 +583,7 @@ begin
         port map (
       C => s_axi_aclk,
       CE => '1',
-      D => \QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_reg\,
+      D => \QSPI_LOOK_UP_MODE_2_MEMORY_1.CMD_decoded_int_reg\,
       Q => s_level_out_d1_cdc_to,
       R => '0'
     );
@@ -1430,7 +1430,7 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity \mb_design_axi_quad_spi_0_0_cdc_sync__parameterized0_22\ is
   port (
-    \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ : out STD_LOGIC;
+    \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ : out STD_LOGIC;
     prmry_in : in STD_LOGIC;
     ext_spi_clk : in STD_LOGIC
   );
@@ -1484,7 +1484,7 @@ begin
       C => ext_spi_clk,
       CE => '1',
       D => s_level_out_d2,
-      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\,
+      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\,
       R => '0'
     );
 end STRUCTURE;
@@ -3078,6 +3078,7 @@ entity mb_design_axi_quad_spi_0_0_qspi_mode_control_logic is
     transfer_start_d2 : out STD_LOGIC;
     SPIXfer_done_int : out STD_LOGIC;
     SPIXfer_done_int_pulse : out STD_LOGIC;
+    sck_d3 : out STD_LOGIC;
     wr_en : out STD_LOGIC;
     ss_o : out STD_LOGIC_VECTOR ( 0 to 0 );
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : out STD_LOGIC;
@@ -3088,19 +3089,20 @@ entity mb_design_axi_quad_spi_0_0_qspi_mode_control_logic is
     io1_o : out STD_LOGIC;
     io2_o : out STD_LOGIC;
     io3_o : out STD_LOGIC;
-    \p_34_out__0\ : out STD_LOGIC;
-    \p_36_out__0\ : out STD_LOGIC;
+    \p_3_out__0\ : out STD_LOGIC;
     Q : out STD_LOGIC_VECTOR ( 2 downto 0 );
-    p_1_out : out STD_LOGIC;
     CE : out STD_LOGIC;
     p_2_out : out STD_LOGIC;
-    \qspi_cntrl_ps_reg[2]_0\ : out STD_LOGIC;
-    \qspi_cntrl_ns131_out__3\ : out STD_LOGIC;
     \qspi_cntrl_ns129_out__3\ : out STD_LOGIC;
+    \RX_DATA_SCK_RATIO_2_GEN1.receive_Data_int_reg[3]_0\ : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\ : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg_0\ : out STD_LOGIC;
+    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_reg_0\ : out STD_LOGIC;
+    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg_1\ : out STD_LOGIC;
     rd_en : out STD_LOGIC;
     \gen_rd_b.doutb_reg_reg[7]\ : out STD_LOGIC_VECTOR ( 7 downto 0 );
     \RATIO_OF_2_GENERATE.Count_reg[4]_0\ : out STD_LOGIC_VECTOR ( 0 to 0 );
-    D : in STD_LOGIC;
+    D_0 : in STD_LOGIC;
     ext_spi_clk : in STD_LOGIC;
     \gen_rd_a.douta_reg_reg\ : in STD_LOGIC;
     spisel : in STD_LOGIC;
@@ -3110,28 +3112,34 @@ entity mb_design_axi_quad_spi_0_0_qspi_mode_control_logic is
     RESET_SYNC_AX2S_2 : in STD_LOGIC;
     scndry_out : in STD_LOGIC;
     almost_full : in STD_LOGIC;
-    io2_i_sync : in STD_LOGIC;
-    io3_i_sync : in STD_LOGIC;
+    \mode_1__2\ : in STD_LOGIC;
+    \p_36_out__0\ : in STD_LOGIC;
     \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][4]\ : in STD_LOGIC;
+    Serial_Dout_019_in : in STD_LOGIC;
+    \p_32_out__0\ : in STD_LOGIC;
+    \p_34_out__0\ : in STD_LOGIC;
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_1\ : in STD_LOGIC;
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_2\ : in STD_LOGIC;
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_3\ : in STD_LOGIC;
-    DTR_FIFO_Data_Exists_d1 : in STD_LOGIC;
     empty : in STD_LOGIC;
+    DTR_FIFO_Data_Exists_d1 : in STD_LOGIC;
     \gen_rd_a.douta_reg_reg_0\ : in STD_LOGIC;
-    douta : in STD_LOGIC_VECTOR ( 10 downto 0 );
-    \IO0_T_control0__0\ : in STD_LOGIC;
-    \qspi_cntrl_ns132_out__0\ : in STD_LOGIC;
-    io1_i_sync : in STD_LOGIC;
-    dout : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    io0_i_sync : in STD_LOGIC;
+    douta : in STD_LOGIC_VECTOR ( 8 downto 0 );
     \gen_rd_a.douta_reg_reg_1\ : in STD_LOGIC;
     \gen_rd_a.douta_reg_reg_2\ : in STD_LOGIC;
     \gen_rd_a.douta_reg_reg_3\ : in STD_LOGIC;
     \gen_rd_a.douta_reg_reg_4\ : in STD_LOGIC;
+    io1_i_sync : in STD_LOGIC;
+    dout : in STD_LOGIC_VECTOR ( 6 downto 0 );
+    io2_i_sync : in STD_LOGIC;
+    \mode_0__2\ : in STD_LOGIC;
+    io3_i_sync : in STD_LOGIC;
+    D : in STD_LOGIC_VECTOR ( 2 downto 0 );
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_4\ : in STD_LOGIC;
     spicr_bits_7_8_to_spi_clk : in STD_LOGIC_VECTOR ( 0 to 1 );
-    E : in STD_LOGIC_VECTOR ( 0 to 0 )
+    E : in STD_LOGIC_VECTOR ( 0 to 0 );
+    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][0]\ : in STD_LOGIC_VECTOR ( 0 to 0 );
+    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_5\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of mb_design_axi_quad_spi_0_0_qspi_mode_control_logic : entity is "qspi_mode_control_logic";
@@ -3146,98 +3154,82 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_mode_control_logic is
   signal \^q\ : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal QSPI_IO0_T_i_1_n_0 : STD_LOGIC;
   signal QSPI_IO0_T_i_2_n_0 : STD_LOGIC;
-  signal QSPI_IO0_T_i_3_n_0 : STD_LOGIC;
   signal \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_1_n_0\ : STD_LOGIC;
   signal \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_2_n_0\ : STD_LOGIC;
   signal \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T_i_1_n_0\ : STD_LOGIC;
-  signal \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T_i_2_n_0\ : STD_LOGIC;
-  signal \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[0]_i_1_n_0\ : STD_LOGIC;
-  signal \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[1]_i_1_n_0\ : STD_LOGIC;
-  signal \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[2]_i_1_n_0\ : STD_LOGIC;
-  signal \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[2]_i_2_n_0\ : STD_LOGIC;
-  signal \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\ : STD_LOGIC_VECTOR ( 2 downto 0 );
+  signal \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[0]_i_1_n_0\ : STD_LOGIC;
+  signal \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[1]_i_1_n_0\ : STD_LOGIC;
+  signal \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[2]_i_1_n_0\ : STD_LOGIC;
+  signal \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[2]_i_2_n_0\ : STD_LOGIC;
+  signal \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\ : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal \RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_STARTUP_USED.SCK_O_reg_i_1_n_0\ : STD_LOGIC;
   signal \RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_STARTUP_USED.SCK_O_reg_i_2_n_0\ : STD_LOGIC;
   signal \RATIO_OF_2_GENERATE.Count_reg_n_0_[0]\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_4_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_5_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_4_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_8_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_9_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_3_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_2_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_3_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_2_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_3_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[1]_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[1]_i_2_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[2]_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[2]_i_2_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[3]_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[3]_i_2_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[4]_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[4]_i_2_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[5]_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[5]_i_2_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[6]_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[7]_i_1_n_0\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[0]\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[1]\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[2]\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[3]\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_4_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_5_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_2_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_3_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_i_2_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_2_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_3_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[1]_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[1]_i_2_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[2]_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[2]_i_2_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[3]_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[3]_i_2_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[4]_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[4]_i_2_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[5]_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[5]_i_2_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[6]_i_1_n_0\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[0]\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[1]\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[2]\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[3]\ : STD_LOGIC;
   signal \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[1]\ : STD_LOGIC;
   signal \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[2]\ : STD_LOGIC;
   signal \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[3]\ : STD_LOGIC;
   signal \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[4]\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[5]\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[6]\ : STD_LOGIC;
-  signal \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[7]\ : STD_LOGIC;
   signal \RATIO_OF_2_GENERATE.sck_o_int_i_1_n_0\ : STD_LOGIC;
   signal \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_1_n_0\ : STD_LOGIC;
-  signal \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_3_n_0\ : STD_LOGIC;
+  signal \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_2_n_0\ : STD_LOGIC;
+  signal \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\ : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal \^spisel_sync\ : STD_LOGIC;
   signal \^spixfer_done_int\ : STD_LOGIC;
   signal SPIXfer_done_int_d1 : STD_LOGIC;
   signal \^spixfer_done_int_pulse\ : STD_LOGIC;
   signal SPIXfer_done_int_pulse_d1 : STD_LOGIC;
   signal SPIXfer_done_int_pulse_d2 : STD_LOGIC;
-  signal Serial_Dout_019_in : STD_LOGIC;
   signal Shift_Reg : STD_LOGIC_VECTOR ( 4 to 7 );
   signal \^drr_overrun_int\ : STD_LOGIC;
   signal \^io0_o\ : STD_LOGIC;
   signal \^io1_o\ : STD_LOGIC;
   signal \^io2_o\ : STD_LOGIC;
   signal \^io3_o\ : STD_LOGIC;
-  signal \mode_0__3\ : STD_LOGIC;
-  signal \mode_1__3\ : STD_LOGIC;
   signal \^modf_strobe_int\ : STD_LOGIC;
   signal p_1_in : STD_LOGIC;
   signal p_2_in : STD_LOGIC;
-  signal p_2_in47_in : STD_LOGIC;
-  signal \^p_34_out__0\ : STD_LOGIC;
-  signal \^p_36_out__0\ : STD_LOGIC;
-  signal \p_38_out__0\ : STD_LOGIC;
-  signal \p_3_out__0\ : STD_LOGIC;
-  signal p_44_in : STD_LOGIC;
+  signal p_2_in45_in : STD_LOGIC;
+  signal \^p_3_out__0\ : STD_LOGIC;
+  signal p_42_in : STD_LOGIC;
+  signal \p_43_out__0\ : STD_LOGIC;
   signal p_6_out : STD_LOGIC;
   signal \p_9_out__1\ : STD_LOGIC;
   signal \plusOp__0\ : STD_LOGIC_VECTOR ( 4 downto 1 );
   signal qspi_cntrl_ns : STD_LOGIC_VECTOR ( 2 downto 0 );
+  signal \^qspi_cntrl_ns129_out__3\ : STD_LOGIC;
   signal \qspi_cntrl_ps[0]_i_2_n_0\ : STD_LOGIC;
   signal \qspi_cntrl_ps[1]_i_2_n_0\ : STD_LOGIC;
-  signal \qspi_cntrl_ps[1]_i_3_n_0\ : STD_LOGIC;
-  signal \^qspi_cntrl_ps_reg[2]_0\ : STD_LOGIC;
   signal receive_Data_int : STD_LOGIC;
-  signal rx_shft_reg_mode_0011 : STD_LOGIC_VECTOR ( 0 to 7 );
+  signal rx_shft_reg_mode_0011 : STD_LOGIC_VECTOR ( 0 to 6 );
   signal sck_d1 : STD_LOGIC;
   signal sck_d2 : STD_LOGIC;
-  signal sck_d3 : STD_LOGIC;
   signal \^sck_o_int\ : STD_LOGIC;
   signal \^stop_clock\ : STD_LOGIC;
   signal stop_clock_reg : STD_LOGIC;
@@ -3245,11 +3237,10 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_mode_control_logic is
   signal stop_clock_reg_i_3_n_0 : STD_LOGIC;
   signal transfer_start : STD_LOGIC;
   signal transfer_start_d1 : STD_LOGIC;
-  signal \transfer_start_pulse__0\ : STD_LOGIC;
   signal \^wr_en\ : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of Allow_MODF_Strobe_i_1 : label is "soft_lutpair81";
-  attribute SOFT_HLUTNM of MODF_strobe_i_1 : label is "soft_lutpair81";
+  attribute SOFT_HLUTNM of Allow_MODF_Strobe_i_1 : label is "soft_lutpair78";
+  attribute SOFT_HLUTNM of MODF_strobe_i_1 : label is "soft_lutpair78";
   attribute XILINX_LEGACY_PRIM : string;
   attribute XILINX_LEGACY_PRIM of MST_TRANS_INHIBIT_D1_I : label is "FD";
   attribute box_type : string;
@@ -3258,50 +3249,40 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_mode_control_logic is
   attribute box_type of QSPI_IO0_T : label is "PRIMITIVE";
   attribute XILINX_LEGACY_PRIM of QSPI_IO1_T : label is "FD";
   attribute box_type of QSPI_IO1_T : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_d1_i_1\ : label is "soft_lutpair82";
-  attribute SOFT_HLUTNM of \QSPI_LOOK_UP_MODE_2_MEMORY_3.DTR_FIFO_Data_Exists_d1_i_1\ : label is "soft_lutpair82";
   attribute XILINX_LEGACY_PRIM of \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T\ : label is "FD";
   attribute box_type of \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T\ : label is "PRIMITIVE";
+  attribute SOFT_HLUTNM of \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_1\ : label is "soft_lutpair72";
   attribute XILINX_LEGACY_PRIM of \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\ : label is "FD";
   attribute box_type of \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[2]_i_2\ : label is "soft_lutpair73";
+  attribute SOFT_HLUTNM of \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T_i_1\ : label is "soft_lutpair72";
+  attribute SOFT_HLUTNM of \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[2]_i_2\ : label is "soft_lutpair71";
   attribute XILINX_LEGACY_PRIM of QSPI_SCK_T : label is "FD";
   attribute box_type of QSPI_SCK_T : label is "PRIMITIVE";
   attribute XILINX_LEGACY_PRIM of QSPI_SPISEL : label is "FD";
   attribute box_type of QSPI_SPISEL : label is "PRIMITIVE";
   attribute XILINX_LEGACY_PRIM of QSPI_SS_T : label is "FD";
   attribute box_type of QSPI_SS_T : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_STARTUP_USED.SCK_O_reg_i_1\ : label is "soft_lutpair76";
-  attribute SOFT_HLUTNM of \RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_STARTUP_USED.SCK_O_reg_i_2\ : label is "soft_lutpair74";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[0]_i_1\ : label is "soft_lutpair85";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[1]_i_1\ : label is "soft_lutpair85";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[2]_i_1\ : label is "soft_lutpair79";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[3]_i_1\ : label is "soft_lutpair70";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[4]_i_3\ : label is "soft_lutpair79";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_3\ : label is "soft_lutpair75";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_5\ : label is "soft_lutpair83";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_6\ : label is "soft_lutpair84";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_10\ : label is "soft_lutpair69";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_11\ : label is "soft_lutpair69";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_8\ : label is "soft_lutpair73";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_9\ : label is "soft_lutpair72";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_3\ : label is "soft_lutpair75";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_4\ : label is "soft_lutpair84";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_3\ : label is "soft_lutpair72";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_3\ : label is "soft_lutpair78";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[1]_i_2\ : label is "soft_lutpair77";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[2]_i_2\ : label is "soft_lutpair78";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[3]_i_2\ : label is "soft_lutpair77";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[7]_i_1\ : label is "soft_lutpair71";
-  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[7]_i_1\ : label is "soft_lutpair71";
-  attribute SOFT_HLUTNM of \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_2\ : label is "soft_lutpair76";
-  attribute SOFT_HLUTNM of \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_3\ : label is "soft_lutpair70";
-  attribute SOFT_HLUTNM of SPIXfer_done_int_pulse_d1_i_1 : label is "soft_lutpair80";
-  attribute SOFT_HLUTNM of \gnuram_async_fifo.xpm_fifo_base_inst_i_3\ : label is "soft_lutpair83";
-  attribute SOFT_HLUTNM of stop_clock_reg_i_2 : label is "soft_lutpair80";
+  attribute SOFT_HLUTNM of \RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_STARTUP_USED.SCK_O_reg_i_2\ : label is "soft_lutpair71";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[0]_i_1\ : label is "soft_lutpair81";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[1]_i_1\ : label is "soft_lutpair81";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[2]_i_1\ : label is "soft_lutpair80";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[3]_i_1\ : label is "soft_lutpair77";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.Count[4]_i_3\ : label is "soft_lutpair77";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_3\ : label is "soft_lutpair75";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_5\ : label is "soft_lutpair79";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_8\ : label is "soft_lutpair73";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_3\ : label is "soft_lutpair75";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_4\ : label is "soft_lutpair74";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_6\ : label is "soft_lutpair73";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[4]_i_1\ : label is "soft_lutpair76";
+  attribute SOFT_HLUTNM of \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_3\ : label is "soft_lutpair80";
+  attribute SOFT_HLUTNM of SPIXfer_done_int_pulse_d1_i_1 : label is "soft_lutpair76";
+  attribute SOFT_HLUTNM of \gnuram_async_fifo.xpm_fifo_base_inst_i_3\ : label is "soft_lutpair79";
   attribute SOFT_HLUTNM of stop_clock_reg_i_3 : label is "soft_lutpair74";
 begin
   Q(2 downto 0) <= \^q\(2 downto 0);
+  \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(2 downto 0) <= \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(2 downto 0);
+  \RX_DATA_SCK_RATIO_2_GEN1.receive_Data_int_reg[3]_0\(2 downto 0) <= \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\(2 downto 0);
   SPISEL_sync <= \^spisel_sync\;
   SPIXfer_done_int <= \^spixfer_done_int\;
   SPIXfer_done_int_pulse <= \^spixfer_done_int_pulse\;
@@ -3311,9 +3292,8 @@ begin
   io2_o <= \^io2_o\;
   io3_o <= \^io3_o\;
   modf_strobe_int <= \^modf_strobe_int\;
-  \p_34_out__0\ <= \^p_34_out__0\;
-  \p_36_out__0\ <= \^p_36_out__0\;
-  \qspi_cntrl_ps_reg[2]_0\ <= \^qspi_cntrl_ps_reg[2]_0\;
+  \p_3_out__0\ <= \^p_3_out__0\;
+  \qspi_cntrl_ns129_out__3\ <= \^qspi_cntrl_ns129_out__3\;
   stop_clock <= \^stop_clock\;
   wr_en <= \^wr_en\;
 Allow_MODF_Strobe_i_1: unisim.vcomponents.LUT4
@@ -3397,40 +3377,29 @@ QSPI_IO0_T: unisim.vcomponents.FDRE
     );
 QSPI_IO0_T_i_1: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFFE2222222"
+      INIT => X"FAABAAABAAABAAAB"
     )
         port map (
       I0 => QSPI_IO0_T_i_2_n_0,
-      I1 => \^q\(0),
+      I1 => \^q\(2),
       I2 => \^q\(1),
-      I3 => douta(4),
-      I4 => douta(5),
-      I5 => QSPI_IO0_T_i_3_n_0,
+      I3 => \^q\(0),
+      I4 => douta(4),
+      I5 => douta(5),
       O => QSPI_IO0_T_i_1_n_0
     );
 QSPI_IO0_T_i_2: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"00000000FF557F75"
+      INIT => X"AAAAAEAEFFAAAEAE"
     )
         port map (
-      I0 => \^q\(1),
-      I1 => douta(10),
-      I2 => \^qspi_cntrl_ps_reg[2]_0\,
-      I3 => \IO0_T_control0__0\,
-      I4 => \qspi_cntrl_ns132_out__0\,
-      I5 => \^q\(2),
+      I0 => \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_2_n_0\,
+      I1 => douta(0),
+      I2 => \^q\(2),
+      I3 => \gen_rd_a.douta_reg_reg_4\,
+      I4 => \^q\(1),
+      I5 => \^q\(0),
       O => QSPI_IO0_T_i_2_n_0
-    );
-QSPI_IO0_T_i_3: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"FF10"
-    )
-        port map (
-      I0 => \^q\(1),
-      I1 => \^q\(2),
-      I2 => douta(0),
-      I3 => \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_2_n_0\,
-      O => QSPI_IO0_T_i_3_n_0
     );
 QSPI_IO1_T: unisim.vcomponents.FDRE
     generic map(
@@ -3443,18 +3412,7 @@ QSPI_IO1_T: unisim.vcomponents.FDRE
       Q => io1_t,
       R => '0'
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_d1_i_1\: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"0004"
-    )
-        port map (
-      I0 => \^q\(1),
-      I1 => DTR_FIFO_Data_Exists_d1,
-      I2 => \^q\(2),
-      I3 => \^q\(0),
-      O => p_1_out
-    );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.DTR_FIFO_Data_Exists_d1_i_1\: unisim.vcomponents.LUT4
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.DTR_FIFO_Data_Exists_d1_i_1\: unisim.vcomponents.LUT4
     generic map(
       INIT => X"0001"
     )
@@ -3465,7 +3423,7 @@ QSPI_IO1_T: unisim.vcomponents.FDRE
       I3 => \^q\(0),
       O => p_2_out
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I_i_2\: unisim.vcomponents.LUT5
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I_i_2\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"00000001"
     )
@@ -3490,14 +3448,14 @@ QSPI_IO1_T: unisim.vcomponents.FDRE
     );
 \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FFFFAABF"
+      INIT => X"FFBFAABF"
     )
         port map (
       I0 => \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_2_n_0\,
-      I1 => douta(9),
+      I1 => douta(8),
       I2 => \^q\(2),
       I3 => \^q\(1),
-      I4 => \gen_rd_a.douta_reg_reg_4\,
+      I4 => \gen_rd_a.douta_reg_reg_3\,
       O => \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_1_n_0\
     );
 \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_2\: unisim.vcomponents.LUT6
@@ -3526,66 +3484,56 @@ QSPI_IO1_T: unisim.vcomponents.FDRE
     );
 \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"BFBFBFBA"
+      INIT => X"BBFFBBAF"
     )
         port map (
       I0 => \QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_2_n_0\,
-      I1 => douta(9),
-      I2 => \^q\(2),
-      I3 => \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T_i_2_n_0\,
-      I4 => \gen_rd_a.douta_reg_reg_4\,
+      I1 => douta(8),
+      I2 => \^q\(1),
+      I3 => \^q\(2),
+      I4 => \gen_rd_a.douta_reg_reg_3\,
       O => \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T_i_1_n_0\
     );
-\QSPI_MODE_2_T_CONTROL.QSPI_IO3_T_i_2\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"07"
-    )
-        port map (
-      I0 => douta(6),
-      I1 => \^q\(0),
-      I2 => \^q\(1),
-      O => \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T_i_2_n_0\
-    );
-\QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[0]_i_1\: unisim.vcomponents.LUT6
+\QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[0]_i_1\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"000000D200000000"
     )
         port map (
       I0 => \^spixfer_done_int\,
       I1 => SPIXfer_done_int_d1,
-      I2 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(0),
+      I2 => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(0),
       I3 => \^q\(0),
       I4 => \^q\(2),
       I5 => \^q\(1),
-      O => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[0]_i_1_n_0\
+      O => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[0]_i_1_n_0\
     );
-\QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[1]_i_1\: unisim.vcomponents.LUT6
+\QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[1]_i_1\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"0000006A00000000"
     )
         port map (
-      I0 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(1),
+      I0 => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(1),
       I1 => \^spixfer_done_int_pulse\,
-      I2 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(0),
+      I2 => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(0),
       I3 => \^q\(0),
       I4 => \^q\(2),
       I5 => \^q\(1),
-      O => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[1]_i_1_n_0\
+      O => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[1]_i_1_n_0\
     );
-\QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[2]_i_1\: unisim.vcomponents.LUT6
+\QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[2]_i_1\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"00000000AAAA6AAA"
     )
         port map (
-      I0 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(2),
-      I1 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(1),
-      I2 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(0),
+      I0 => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(2),
+      I1 => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(1),
+      I2 => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(0),
       I3 => \^spixfer_done_int\,
       I4 => SPIXfer_done_int_d1,
-      I5 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[2]_i_2_n_0\,
-      O => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[2]_i_1_n_0\
+      I5 => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[2]_i_2_n_0\,
+      O => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[2]_i_1_n_0\
     );
-\QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[2]_i_2\: unisim.vcomponents.LUT3
+\QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[2]_i_2\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"FD"
     )
@@ -3593,30 +3541,30 @@ QSPI_IO1_T: unisim.vcomponents.FDRE
       I0 => \^q\(1),
       I1 => \^q\(2),
       I2 => \^q\(0),
-      O => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[2]_i_2_n_0\
+      O => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[2]_i_2_n_0\
     );
-\QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg[0]\: unisim.vcomponents.FDRE
+\QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg[0]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => '1',
-      D => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[0]_i_1_n_0\,
-      Q => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(0),
+      D => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[0]_i_1_n_0\,
+      Q => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(0),
       R => '0'
     );
-\QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg[1]\: unisim.vcomponents.FDRE
+\QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg[1]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => '1',
-      D => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[1]_i_1_n_0\,
-      Q => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(1),
+      D => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[1]_i_1_n_0\,
+      Q => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(1),
       R => '0'
     );
-\QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg[2]\: unisim.vcomponents.FDRE
+\QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg[2]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => '1',
-      D => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt[2]_i_1_n_0\,
-      Q => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(2),
+      D => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt[2]_i_1_n_0\,
+      Q => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(2),
       R => '0'
     );
 QSPI_SCK_T: unisim.vcomponents.FDRE
@@ -3626,7 +3574,7 @@ QSPI_SCK_T: unisim.vcomponents.FDRE
         port map (
       C => ext_spi_clk,
       CE => '1',
-      D => D,
+      D => D_0,
       Q => sck_t,
       R => '0'
     );
@@ -3648,7 +3596,7 @@ QSPI_SS_T: unisim.vcomponents.FDRE
         port map (
       C => ext_spi_clk,
       CE => '1',
-      D => D,
+      D => D_0,
       Q => ss_t,
       R => '0'
     );
@@ -3660,8 +3608,8 @@ QSPI_SS_T: unisim.vcomponents.FDRE
       I0 => \^sck_o_int\,
       I1 => \RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_STARTUP_USED.SCK_O_reg_i_2_n_0\,
       I2 => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_2\,
-      I3 => transfer_start,
-      I4 => transfer_start_d1,
+      I3 => transfer_start_d1,
+      I4 => transfer_start,
       O => \RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_STARTUP_USED.SCK_O_reg_i_1_n_0\
     );
 \RATIO_NOT_EQUAL_4_GENERATE.SCK_O_NQ_4_STARTUP_USED.SCK_O_reg_i_2\: unisim.vcomponents.LUT5
@@ -3698,7 +3646,7 @@ QSPI_SS_T: unisim.vcomponents.FDRE
     )
         port map (
       I0 => \RATIO_OF_2_GENERATE.Count_reg_n_0_[0]\,
-      I1 => p_44_in,
+      I1 => p_42_in,
       O => \plusOp__0\(1)
     );
 \RATIO_OF_2_GENERATE.Count[2]_i_1\: unisim.vcomponents.LUT3
@@ -3707,7 +3655,7 @@ QSPI_SS_T: unisim.vcomponents.FDRE
     )
         port map (
       I0 => \RATIO_OF_2_GENERATE.Count_reg_n_0_[0]\,
-      I1 => p_44_in,
+      I1 => p_42_in,
       I2 => p_1_in,
       O => \plusOp__0\(2)
     );
@@ -3716,10 +3664,10 @@ QSPI_SS_T: unisim.vcomponents.FDRE
       INIT => X"7F80"
     )
         port map (
-      I0 => p_44_in,
+      I0 => p_42_in,
       I1 => \RATIO_OF_2_GENERATE.Count_reg_n_0_[0]\,
       I2 => p_1_in,
-      I3 => p_2_in47_in,
+      I3 => p_2_in45_in,
       O => \plusOp__0\(3)
     );
 \RATIO_OF_2_GENERATE.Count[4]_i_1\: unisim.vcomponents.LUT3
@@ -3739,14 +3687,14 @@ QSPI_SS_T: unisim.vcomponents.FDRE
         port map (
       I0 => p_1_in,
       I1 => \RATIO_OF_2_GENERATE.Count_reg_n_0_[0]\,
-      I2 => p_44_in,
-      I3 => p_2_in47_in,
+      I2 => p_42_in,
+      I3 => p_2_in45_in,
       O => \plusOp__0\(4)
     );
 \RATIO_OF_2_GENERATE.Count_reg[0]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => E(0),
+      CE => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_5\(0),
       D => p_2_in,
       Q => \RATIO_OF_2_GENERATE.Count_reg_n_0_[0]\,
       R => p_6_out
@@ -3754,15 +3702,15 @@ QSPI_SS_T: unisim.vcomponents.FDRE
 \RATIO_OF_2_GENERATE.Count_reg[1]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => E(0),
+      CE => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_5\(0),
       D => \plusOp__0\(1),
-      Q => p_44_in,
+      Q => p_42_in,
       R => p_6_out
     );
 \RATIO_OF_2_GENERATE.Count_reg[2]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => E(0),
+      CE => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_5\(0),
       D => \plusOp__0\(2),
       Q => p_1_in,
       R => p_6_out
@@ -3770,33 +3718,33 @@ QSPI_SS_T: unisim.vcomponents.FDRE
 \RATIO_OF_2_GENERATE.Count_reg[3]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => E(0),
+      CE => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_5\(0),
       D => \plusOp__0\(3),
-      Q => p_2_in47_in,
+      Q => p_2_in45_in,
       R => p_6_out
     );
 \RATIO_OF_2_GENERATE.Count_reg[4]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => E(0),
+      CE => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_5\(0),
       D => \plusOp__0\(4),
       Q => \RATIO_OF_2_GENERATE.Count_reg[4]_0\(0),
       R => p_6_out
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_1\: unisim.vcomponents.LUT6
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_1\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"B8FFFFFFB8000000"
     )
         port map (
       I0 => \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][4]\,
-      I1 => \p_3_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_4_n_0\,
-      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_5_n_0\,
+      I1 => \^p_3_out__0\,
+      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_4_n_0\,
+      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_5_n_0\,
       I4 => Serial_Dout_019_in,
       I5 => \^io0_o\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_1_n_0\
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_1_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_3\: unisim.vcomponents.LUT3
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_3\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"F4"
     )
@@ -3804,21 +3752,21 @@ QSPI_SS_T: unisim.vcomponents.FDRE
       I0 => transfer_start_d1,
       I1 => transfer_start,
       I2 => SPIXfer_done_int_d1,
-      O => \p_3_out__0\
+      O => \^p_3_out__0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_4\: unisim.vcomponents.LUT5
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_4\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FFE400E4"
+      INIT => X"AACFAAC0"
     )
         port map (
-      I0 => \^p_36_out__0\,
-      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[3]\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[1]\,
-      I3 => \^p_34_out__0\,
-      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[0]\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_4_n_0\
+      I0 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[3]\,
+      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[1]\,
+      I2 => \mode_0__2\,
+      I3 => \mode_1__2\,
+      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[0]\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_4_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_5\: unisim.vcomponents.LUT4
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_5\: unisim.vcomponents.LUT4
     generic map(
       INIT => X"F700"
     )
@@ -3827,173 +3775,129 @@ QSPI_SS_T: unisim.vcomponents.FDRE
       I1 => transfer_start_d1,
       I2 => SPIXfer_done_int_d1,
       I3 => transfer_start,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_5_n_0\
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_5_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_6\: unisim.vcomponents.LUT2
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_8\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"7"
+      INIT => X"A3A0A0A0"
     )
         port map (
-      I0 => \mode_1__3\,
-      I1 => \mode_0__3\,
-      O => Serial_Dout_019_in
+      I0 => douta(7),
+      I1 => \^q\(1),
+      I2 => \^q\(2),
+      I3 => \^q\(0),
+      I4 => douta(0),
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_reg_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_reg\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_reg\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => '1',
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_1_n_0\,
       Q => \^io0_o\,
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_1\: unisim.vcomponents.LUT6
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFF9FFFF00600000"
+      INIT => X"EFEFEFFF20202000"
     )
         port map (
-      I0 => \mode_0__3\,
-      I1 => \mode_1__3\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_4_n_0\,
-      I3 => \^p_34_out__0\,
-      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_5_n_0\,
+      I0 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_2_n_0\,
+      I1 => \p_32_out__0\,
+      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_5_n_0\,
+      I3 => \p_36_out__0\,
+      I4 => \p_34_out__0\,
       I5 => \^io1_o\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_1_n_0\
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_1_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_10\: unisim.vcomponents.LUT5
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_2\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"00080000"
+      INIT => X"E4E4FFE4E4E400E4"
     )
         port map (
-      I0 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(0),
-      I1 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(1),
-      I2 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(2),
-      I3 => douta(3),
-      I4 => douta(7),
-      O => \qspi_cntrl_ns131_out__3\
+      I0 => \^p_3_out__0\,
+      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[2]\,
+      I2 => dout(4),
+      I3 => \mode_0__2\,
+      I4 => \mode_1__2\,
+      I5 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_i_2_n_0\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_2_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_11\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"04000000"
-    )
-        port map (
-      I0 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(0),
-      I1 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(2),
-      I2 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(1),
-      I3 => douta(7),
-      I4 => douta(3),
-      O => \qspi_cntrl_ns129_out__3\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_2\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"F0F0F0F0FF008888"
-    )
-        port map (
-      I0 => \^q\(0),
-      I1 => douta(0),
-      I2 => douta(8),
-      I3 => \gen_rd_a.douta_reg_reg_1\,
-      I4 => \^q\(1),
-      I5 => \^q\(2),
-      O => \mode_0__3\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_3\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"F0F0F0F0FF008888"
-    )
-        port map (
-      I0 => \^q\(0),
-      I1 => douta(1),
-      I2 => douta(9),
-      I3 => \gen_rd_a.douta_reg_reg_2\,
-      I4 => \^q\(1),
-      I5 => \^q\(2),
-      O => \mode_1__3\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_4\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"FC0CFAFAFC0C0A0A"
-    )
-        port map (
-      I0 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[2]\,
-      I1 => dout(5),
-      I2 => \^p_36_out__0\,
-      I3 => dout(7),
-      I4 => \p_3_out__0\,
-      I5 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[0]\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_4_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_5\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"0000000030333133"
-    )
-        port map (
-      I0 => \gen_rd_a.douta_reg_reg_1\,
-      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_8_n_0\,
-      I2 => \^q\(2),
-      I3 => \^q\(1),
-      I4 => \gen_rd_a.douta_reg_reg_2\,
-      I5 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_9_n_0\,
-      O => \^p_34_out__0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_8\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"AA00AAC0"
-    )
-        port map (
-      I0 => douta(8),
-      I1 => douta(0),
-      I2 => \^q\(0),
-      I3 => \^q\(2),
-      I4 => \^q\(1),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_8_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_9\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"AA00AAC0"
-    )
-        port map (
-      I0 => douta(9),
-      I1 => douta(1),
-      I2 => \^q\(0),
-      I3 => \^q\(2),
-      I4 => \^q\(1),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_9_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_reg\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_reg\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => '1',
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_1_n_0\,
       Q => \^io1_o\,
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_1\: unisim.vcomponents.LUT6
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FEFFFFFF10000000"
+      INIT => X"DFFF8000"
     )
         port map (
-      I0 => \^p_34_out__0\,
-      I1 => \^p_36_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_3_n_0\,
-      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_5_n_0\,
-      I4 => \p_38_out__0\,
-      I5 => \^io2_o\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_1_n_0\
+      I0 => \mode_1__2\,
+      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_3_n_0\,
+      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_5_n_0\,
+      I3 => \p_36_out__0\,
+      I4 => \^io2_o\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_1_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_2\: unisim.vcomponents.LUT6
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_3\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"00000000C0CCCECC"
+      INIT => X"AAEFAA20"
     )
         port map (
-      I0 => \gen_rd_a.douta_reg_reg_1\,
-      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_8_n_0\,
+      I0 => dout(5),
+      I1 => transfer_start_d1,
+      I2 => transfer_start,
+      I3 => SPIXfer_done_int_d1,
+      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[1]\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_3_n_0\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_4\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"A3A0A0A0"
+    )
+        port map (
+      I0 => douta(8),
+      I1 => \^q\(1),
       I2 => \^q\(2),
-      I3 => \^q\(1),
-      I4 => \gen_rd_a.douta_reg_reg_2\,
-      I5 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_9_n_0\,
-      O => \^p_36_out__0\
+      I3 => \^q\(0),
+      I4 => douta(1),
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg_1\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_3\: unisim.vcomponents.LUT5
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_6\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"2"
+    )
+        port map (
+      I0 => \^q\(1),
+      I1 => \^q\(2),
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg_0\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg\: unisim.vcomponents.FDRE
+     port map (
+      C => ext_spi_clk,
+      CE => '1',
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_1_n_0\,
+      Q => \^io2_o\,
+      R => Rst_to_spi
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_i_1\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"3F3F3B3F00000800"
+    )
+        port map (
+      I0 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_i_2_n_0\,
+      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_5_n_0\,
+      I2 => \p_32_out__0\,
+      I3 => \p_36_out__0\,
+      I4 => \p_34_out__0\,
+      I5 => \^io3_o\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_i_1_n_0\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_i_2\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"AAEFAA20"
     )
@@ -4002,71 +3906,18 @@ QSPI_SS_T: unisim.vcomponents.FDRE
       I1 => transfer_start_d1,
       I2 => transfer_start,
       I3 => SPIXfer_done_int_d1,
-      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[1]\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_3_n_0\
+      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[0]\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_i_2_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_4\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"2"
-    )
-        port map (
-      I0 => \mode_1__3\,
-      I1 => \mode_0__3\,
-      O => \p_38_out__0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_reg\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_reg\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => '1',
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_2_i_1_n_0\,
-      Q => \^io2_o\,
-      R => Rst_to_spi
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_1\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"BFBFBBBF80808880"
-    )
-        port map (
-      I0 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_2_n_0\,
-      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_5_n_0\,
-      I2 => \^p_34_out__0\,
-      I3 => \p_38_out__0\,
-      I4 => \^p_36_out__0\,
-      I5 => \^io3_o\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_1_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_2\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"8F808F8F8F808080"
-    )
-        port map (
-      I0 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_3_n_0\,
-      I1 => douta(6),
-      I2 => \^p_34_out__0\,
-      I3 => dout(7),
-      I4 => \p_3_out__0\,
-      I5 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[0]\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_2_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_3\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"02"
-    )
-        port map (
-      I0 => \^q\(0),
-      I1 => \^q\(2),
-      I2 => \^q\(1),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_3_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg\: unisim.vcomponents.FDRE
-     port map (
-      C => ext_spi_clk,
-      CE => '1',
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_3_i_1_n_0\,
       Q => \^io3_o\,
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1\: unisim.vcomponents.LUT5
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"FF008F00"
     )
@@ -4076,328 +3927,272 @@ QSPI_SS_T: unisim.vcomponents.FDRE
       I2 => transfer_start_d1,
       I3 => transfer_start,
       I4 => SPIXfer_done_int_d1,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_2\: unisim.vcomponents.LUT5
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_2\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"BBB8B8B8"
-    )
-        port map (
-      I0 => dout(7),
-      I1 => \p_3_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_3_n_0\,
-      I3 => \^p_34_out__0\,
-      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[1]\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_2_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_3\: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"0A0C"
-    )
-        port map (
-      I0 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[2]\,
-      I1 => Shift_Reg(4),
-      I2 => \^p_34_out__0\,
-      I3 => \^p_36_out__0\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_3_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[1]_i_1\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"BBB8B8B8"
+      INIT => X"AEA2"
     )
         port map (
       I0 => dout(6),
-      I1 => \p_3_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[1]_i_2_n_0\,
-      I3 => \^p_34_out__0\,
-      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[2]\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[1]_i_1_n_0\
+      I1 => transfer_start_d1,
+      I2 => SPIXfer_done_int_d1,
+      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_3_n_0\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_2_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[1]_i_2\: unisim.vcomponents.LUT4
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_3\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"0A0C"
-    )
-        port map (
-      I0 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[3]\,
-      I1 => Shift_Reg(5),
-      I2 => \^p_34_out__0\,
-      I3 => \^p_36_out__0\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[1]_i_2_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[2]_i_1\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"BBB8B8B8"
-    )
-        port map (
-      I0 => dout(5),
-      I1 => \p_3_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[2]_i_2_n_0\,
-      I3 => \^p_34_out__0\,
-      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[3]\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[2]_i_1_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[2]_i_2\: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"0A0C"
+      INIT => X"AACFAAC0"
     )
         port map (
       I0 => Shift_Reg(4),
-      I1 => Shift_Reg(6),
-      I2 => \^p_34_out__0\,
-      I3 => \^p_36_out__0\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[2]_i_2_n_0\
+      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[2]\,
+      I2 => \mode_0__2\,
+      I3 => \mode_1__2\,
+      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[1]\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_3_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[3]_i_1\: unisim.vcomponents.LUT5
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[1]_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"BBB8B8B8"
+      INIT => X"AEA2"
     )
         port map (
-      I0 => dout(4),
-      I1 => \p_3_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[3]_i_2_n_0\,
-      I3 => \^p_34_out__0\,
-      I4 => Shift_Reg(4),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[3]_i_1_n_0\
+      I0 => dout(5),
+      I1 => transfer_start_d1,
+      I2 => SPIXfer_done_int_d1,
+      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[1]_i_2_n_0\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[1]_i_1_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[3]_i_2\: unisim.vcomponents.LUT4
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[1]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"0A0C"
+      INIT => X"AACFAAC0"
     )
         port map (
       I0 => Shift_Reg(5),
-      I1 => Shift_Reg(7),
-      I2 => \^p_34_out__0\,
-      I3 => \^p_36_out__0\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[3]_i_2_n_0\
+      I1 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[3]\,
+      I2 => \mode_0__2\,
+      I3 => \mode_1__2\,
+      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[2]\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[1]_i_2_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[4]_i_1\: unisim.vcomponents.LUT5
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[2]_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"BBB8B8B8"
+      INIT => X"AEA2"
     )
         port map (
-      I0 => dout(3),
-      I1 => \p_3_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[4]_i_2_n_0\,
-      I3 => \^p_34_out__0\,
-      I4 => Shift_Reg(5),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[4]_i_1_n_0\
+      I0 => dout(4),
+      I1 => transfer_start_d1,
+      I2 => SPIXfer_done_int_d1,
+      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[2]_i_2_n_0\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[2]_i_1_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[4]_i_2\: unisim.vcomponents.LUT4
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[2]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"0A0C"
+      INIT => X"AACFAAC0"
     )
         port map (
       I0 => Shift_Reg(6),
-      I1 => io3_i_sync,
-      I2 => \^p_34_out__0\,
-      I3 => \^p_36_out__0\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[4]_i_2_n_0\
+      I1 => Shift_Reg(4),
+      I2 => \mode_0__2\,
+      I3 => \mode_1__2\,
+      I4 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[3]\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[2]_i_2_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[5]_i_1\: unisim.vcomponents.LUT5
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[3]_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"BBB8B8B8"
+      INIT => X"AEA2"
     )
         port map (
-      I0 => dout(2),
-      I1 => \p_3_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[5]_i_2_n_0\,
-      I3 => \^p_34_out__0\,
-      I4 => Shift_Reg(6),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[5]_i_1_n_0\
+      I0 => dout(3),
+      I1 => transfer_start_d1,
+      I2 => SPIXfer_done_int_d1,
+      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[3]_i_2_n_0\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[3]_i_1_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[5]_i_2\: unisim.vcomponents.LUT4
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[3]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"0A0C"
+      INIT => X"AACFAAC0"
     )
         port map (
       I0 => Shift_Reg(7),
-      I1 => io2_i_sync,
-      I2 => \^p_34_out__0\,
-      I3 => \^p_36_out__0\,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[5]_i_2_n_0\
+      I1 => Shift_Reg(5),
+      I2 => \mode_0__2\,
+      I3 => \mode_1__2\,
+      I4 => Shift_Reg(4),
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[3]_i_2_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[6]_i_1\: unisim.vcomponents.LUT5
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[4]_i_1\: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"AEA2"
+    )
+        port map (
+      I0 => dout(2),
+      I1 => transfer_start_d1,
+      I2 => SPIXfer_done_int_d1,
+      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[4]_i_2_n_0\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[4]_i_1_n_0\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[4]_i_2\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"AACFAAC0"
+    )
+        port map (
+      I0 => io3_i_sync,
+      I1 => Shift_Reg(6),
+      I2 => \mode_0__2\,
+      I3 => \mode_1__2\,
+      I4 => Shift_Reg(5),
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[4]_i_2_n_0\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[5]_i_1\: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"AEA2"
+    )
+        port map (
+      I0 => dout(1),
+      I1 => transfer_start_d1,
+      I2 => SPIXfer_done_int_d1,
+      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[5]_i_2_n_0\,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[5]_i_1_n_0\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[5]_i_2\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"AACFAAC0"
+    )
+        port map (
+      I0 => io2_i_sync,
+      I1 => Shift_Reg(7),
+      I2 => \mode_0__2\,
+      I3 => \mode_1__2\,
+      I4 => Shift_Reg(6),
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[5]_i_2_n_0\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[6]_i_1\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"FFE200E2"
     )
         port map (
       I0 => io1_i_sync,
-      I1 => \^p_34_out__0\,
+      I1 => \p_32_out__0\,
       I2 => Shift_Reg(7),
-      I3 => \p_3_out__0\,
-      I4 => dout(1),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[6]_i_1_n_0\
+      I3 => \^p_3_out__0\,
+      I4 => dout(0),
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[6]_i_1_n_0\
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[7]_i_1\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"B8BBB888"
-    )
-        port map (
-      I0 => dout(0),
-      I1 => \p_3_out__0\,
-      I2 => io1_i_sync,
-      I3 => \^p_34_out__0\,
-      I4 => io0_i_sync,
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[7]_i_1_n_0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg[0]\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[0]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_2_n_0\,
-      Q => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[0]\,
+      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_2_n_0\,
+      Q => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[0]\,
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg[1]\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[1]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[1]_i_1_n_0\,
-      Q => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[1]\,
+      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[1]_i_1_n_0\,
+      Q => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[1]\,
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg[2]\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[2]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[2]_i_1_n_0\,
-      Q => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[2]\,
+      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[2]_i_1_n_0\,
+      Q => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[2]\,
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg[3]\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[3]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[3]_i_1_n_0\,
-      Q => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg_n_0_[3]\,
+      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[3]_i_1_n_0\,
+      Q => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg_n_0_[3]\,
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg[4]\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[4]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[4]_i_1_n_0\,
+      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[4]_i_1_n_0\,
       Q => Shift_Reg(4),
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg[5]\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[5]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[5]_i_1_n_0\,
+      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[5]_i_1_n_0\,
       Q => Shift_Reg(5),
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg[6]\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[6]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[6]_i_1_n_0\,
+      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
+      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[6]_i_1_n_0\,
       Q => Shift_Reg(6),
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg_reg[7]\: unisim.vcomponents.FDRE
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[7]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
-      D => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Shift_Reg[7]_i_1_n_0\,
+      CE => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[0]_i_1_n_0\,
+      D => \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][0]\(0),
       Q => Shift_Reg(7),
       R => Rst_to_spi
     );
-\RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"10"
-    )
-        port map (
-      I0 => douta(10),
-      I1 => sck_d3,
-      I2 => Serial_Dout_019_in,
-      O => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1_n_0\
-    );
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FEBA5410"
+      INIT => X"FFE400E4"
     )
         port map (
-      I0 => \^p_34_out__0\,
-      I1 => \^p_36_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[5]\,
-      I3 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[3]\,
+      I0 => \p_34_out__0\,
+      I1 => \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\(2),
+      I2 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[3]\,
+      I3 => \p_32_out__0\,
       I4 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[2]\,
       O => rx_shft_reg_mode_0011(1)
     );
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[2]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FEBA5410"
+      INIT => X"FFE400E4"
     )
         port map (
-      I0 => \^p_34_out__0\,
-      I1 => \^p_36_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[6]\,
-      I3 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[4]\,
+      I0 => \p_34_out__0\,
+      I1 => \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\(1),
+      I2 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[4]\,
+      I3 => \p_32_out__0\,
       I4 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[3]\,
       O => rx_shft_reg_mode_0011(2)
     );
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[3]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FEBA5410"
+      INIT => X"FFE400E4"
     )
         port map (
-      I0 => \^p_34_out__0\,
-      I1 => \^p_36_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[7]\,
-      I3 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[5]\,
+      I0 => \p_34_out__0\,
+      I1 => \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\(0),
+      I2 => \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\(2),
+      I3 => \p_32_out__0\,
       I4 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[4]\,
       O => rx_shft_reg_mode_0011(3)
-    );
-\RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[4]_i_1\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"FEBA5410"
-    )
-        port map (
-      I0 => \^p_34_out__0\,
-      I1 => \^p_36_out__0\,
-      I2 => io3_i_sync,
-      I3 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[6]\,
-      I4 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[5]\,
-      O => rx_shft_reg_mode_0011(4)
-    );
-\RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[5]_i_1\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"FEBA5410"
-    )
-        port map (
-      I0 => \^p_34_out__0\,
-      I1 => \^p_36_out__0\,
-      I2 => io2_i_sync,
-      I3 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[7]\,
-      I4 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[6]\,
-      O => rx_shft_reg_mode_0011(5)
     );
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[6]_i_1\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"B8"
     )
         port map (
-      I0 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[7]\,
-      I1 => \^p_34_out__0\,
+      I0 => \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\(0),
+      I1 => \p_32_out__0\,
       I2 => io1_i_sync,
       O => rx_shft_reg_mode_0011(6)
-    );
-\RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[7]_i_1\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"B8"
-    )
-        port map (
-      I0 => io1_i_sync,
-      I1 => \^p_34_out__0\,
-      I2 => io0_i_sync,
-      O => rx_shft_reg_mode_0011(7)
     );
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[1]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1_n_0\,
+      CE => E(0),
       D => rx_shft_reg_mode_0011(1),
       Q => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[1]\,
       R => Rst_to_spi
@@ -4405,7 +4200,7 @@ QSPI_SS_T: unisim.vcomponents.FDRE
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[2]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1_n_0\,
+      CE => E(0),
       D => rx_shft_reg_mode_0011(2),
       Q => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[2]\,
       R => Rst_to_spi
@@ -4413,7 +4208,7 @@ QSPI_SS_T: unisim.vcomponents.FDRE
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[3]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1_n_0\,
+      CE => E(0),
       D => rx_shft_reg_mode_0011(3),
       Q => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[3]\,
       R => Rst_to_spi
@@ -4421,33 +4216,33 @@ QSPI_SS_T: unisim.vcomponents.FDRE
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[4]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1_n_0\,
-      D => rx_shft_reg_mode_0011(4),
+      CE => E(0),
+      D => D(2),
       Q => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[4]\,
       R => Rst_to_spi
     );
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1_n_0\,
-      D => rx_shft_reg_mode_0011(5),
-      Q => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[5]\,
+      CE => E(0),
+      D => D(1),
+      Q => \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\(2),
       R => Rst_to_spi
     );
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[6]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1_n_0\,
+      CE => E(0),
       D => rx_shft_reg_mode_0011(6),
-      Q => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[6]\,
+      Q => \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\(1),
       R => Rst_to_spi
     );
 \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[7]\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
-      CE => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1_n_0\,
-      D => rx_shft_reg_mode_0011(7),
-      Q => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[7]\,
+      CE => E(0),
+      D => D(0),
+      Q => \^rx_data_sck_ratio_2_gen1.receive_data_int_reg[3]_0\(0),
       R => Rst_to_spi
     );
 \RATIO_OF_2_GENERATE.sck_d1_reg\: unisim.vcomponents.FDRE
@@ -4507,37 +4302,35 @@ QSPI_SS_T: unisim.vcomponents.FDRE
     );
 \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"1011101010101010"
+      INIT => X"A0A0A0A080808000"
     )
         port map (
-      I0 => Rst_to_spi,
-      I1 => \transfer_start_pulse__0\,
-      I2 => \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_3_n_0\,
-      I3 => \RATIO_OF_2_GENERATE.Count_reg_n_0_[0]\,
-      I4 => p_44_in,
-      I5 => \p_38_out__0\,
+      I0 => \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_2_n_0\,
+      I1 => p_1_in,
+      I2 => \p_43_out__0\,
+      I3 => \p_34_out__0\,
+      I4 => p_2_in45_in,
+      I5 => \p_36_out__0\,
       O => \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_1_n_0\
     );
-\RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_2\: unisim.vcomponents.LUT2
+\RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_2\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"0B"
+    )
+        port map (
+      I0 => transfer_start_d1,
+      I1 => transfer_start,
+      I2 => Rst_to_spi,
+      O => \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_2_n_0\
+    );
+\RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_3\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
-      I0 => transfer_start,
-      I1 => transfer_start_d1,
-      O => \transfer_start_pulse__0\
-    );
-\RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_3\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"08080800"
-    )
-        port map (
-      I0 => p_1_in,
-      I1 => p_44_in,
-      I2 => \RATIO_OF_2_GENERATE.Count_reg_n_0_[0]\,
-      I3 => \^p_36_out__0\,
-      I4 => p_2_in47_in,
-      O => \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_i_3_n_0\
+      I0 => p_42_in,
+      I1 => \RATIO_OF_2_GENERATE.Count_reg_n_0_[0]\,
+      O => \p_43_out__0\
     );
 \RX_DATA_SCK_RATIO_2_GEN1.SPIXfer_done_int_reg\: unisim.vcomponents.FDRE
      port map (
@@ -4558,13 +4351,13 @@ QSPI_SS_T: unisim.vcomponents.FDRE
     );
 \RX_DATA_SCK_RATIO_2_GEN1.receive_Data_int[0]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FEBA5410"
+      INIT => X"FFE400E4"
     )
         port map (
-      I0 => \^p_34_out__0\,
-      I1 => \^p_36_out__0\,
-      I2 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[4]\,
-      I3 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[2]\,
+      I0 => \p_34_out__0\,
+      I1 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[4]\,
+      I2 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[2]\,
+      I3 => \p_32_out__0\,
       I4 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg_n_0_[1]\,
       O => rx_shft_reg_mode_0011(0)
     );
@@ -4604,7 +4397,7 @@ QSPI_SS_T: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => receive_Data_int,
-      D => rx_shft_reg_mode_0011(4),
+      D => D(2),
       Q => \gen_rd_b.doutb_reg_reg[7]\(3),
       R => Rst_to_spi
     );
@@ -4612,7 +4405,7 @@ QSPI_SS_T: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => receive_Data_int,
-      D => rx_shft_reg_mode_0011(5),
+      D => D(1),
       Q => \gen_rd_b.doutb_reg_reg[7]\(2),
       R => Rst_to_spi
     );
@@ -4628,7 +4421,7 @@ QSPI_SS_T: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => receive_Data_int,
-      D => rx_shft_reg_mode_0011(7),
+      D => D(0),
       Q => \gen_rd_b.doutb_reg_reg[7]\(0),
       R => Rst_to_spi
     );
@@ -4711,7 +4504,7 @@ SPIXfer_done_int_pulse_d3_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_0\,
       I1 => \^q\(1),
-      I2 => douta(7),
+      I2 => douta(6),
       I3 => empty,
       I4 => \^q\(0),
       O => \qspi_cntrl_ps[0]_i_2_n_0\
@@ -4724,61 +4517,48 @@ SPIXfer_done_int_pulse_d3_reg: unisim.vcomponents.FDRE
       I0 => \qspi_cntrl_ps[1]_i_2_n_0\,
       I1 => empty,
       I2 => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_0\,
-      I3 => \qspi_cntrl_ps[1]_i_3_n_0\,
+      I3 => \gen_rd_a.douta_reg_reg_1\,
       I4 => \^q\(1),
       I5 => \^q\(2),
       O => qspi_cntrl_ns(1)
     );
 \qspi_cntrl_ps[1]_i_2\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000000800000000"
+      INIT => X"0000000000002000"
     )
         port map (
-      I0 => douta(2),
-      I1 => \^spixfer_done_int\,
-      I2 => SPIXfer_done_int_d1,
-      I3 => \^q\(1),
+      I0 => \^spixfer_done_int\,
+      I1 => SPIXfer_done_int_d1,
+      I2 => \^q\(0),
+      I3 => douta(2),
       I4 => \^q\(2),
-      I5 => \^q\(0),
+      I5 => \^q\(1),
       O => \qspi_cntrl_ps[1]_i_2_n_0\
-    );
-\qspi_cntrl_ps[1]_i_3\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"1BBB0FBB5FFF0FFF"
-    )
-        port map (
-      I0 => \^q\(0),
-      I1 => douta(10),
-      I2 => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_0\,
-      I3 => empty,
-      I4 => douta(7),
-      I5 => \^qspi_cntrl_ps_reg[2]_0\,
-      O => \qspi_cntrl_ps[1]_i_3_n_0\
     );
 \qspi_cntrl_ps[2]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"77770F0077770000"
+      INIT => X"7700770077F07700"
     )
         port map (
       I0 => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_0\,
       I1 => empty,
-      I2 => \gen_rd_a.douta_reg_reg_3\,
-      I3 => \^qspi_cntrl_ps_reg[2]_0\,
-      I4 => \^q\(2),
-      I5 => \^q\(1),
+      I2 => \^qspi_cntrl_ns129_out__3\,
+      I3 => \^q\(2),
+      I4 => \^q\(1),
+      I5 => \gen_rd_a.douta_reg_reg_2\,
       O => qspi_cntrl_ns(2)
     );
-\qspi_cntrl_ps[2]_i_3\: unisim.vcomponents.LUT5
+\qspi_cntrl_ps[2]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"00400800"
+      INIT => X"00080000"
     )
         port map (
-      I0 => douta(3),
-      I1 => douta(7),
-      I2 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(1),
-      I3 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(2),
-      I4 => \QSPI_QUAD_MODE_SP_MEM_GEN.addr_cnt_reg__0\(0),
-      O => \^qspi_cntrl_ps_reg[2]_0\
+      I0 => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(0),
+      I1 => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(1),
+      I2 => \^qspi_quad_mode_mixed_wb_mem_gen.addr_cnt_reg__0\(2),
+      I3 => douta(3),
+      I4 => douta(6),
+      O => \^qspi_cntrl_ns129_out__3\
     );
 \qspi_cntrl_ps_reg[0]\: unisim.vcomponents.FDRE
      port map (
@@ -5126,7 +4906,7 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_reset_sync_module is
   attribute box_type of RESET_SYNC_AX2S_2 : label is "PRIMITIVE";
 begin
   Rst_to_spi <= \^rst_to_spi\;
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I_i_1\: unisim.vcomponents.LUT2
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I_i_1\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"E"
     )
@@ -5211,70 +4991,70 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_soft_reset is
   attribute box_type : string;
   attribute box_type of FF_WRACK : label is "PRIMITIVE";
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of FF_WRACK_i_1 : label is "soft_lutpair86";
+  attribute SOFT_HLUTNM of FF_WRACK_i_1 : label is "soft_lutpair82";
   attribute IS_CE_INVERTED of \RESET_FLOPS[0].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[0].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[0].RST_FLOPS\ : label is "PRIMITIVE";
   attribute IS_CE_INVERTED of \RESET_FLOPS[10].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[10].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[10].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[10].RST_FLOPS_i_1\ : label is "soft_lutpair91";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[10].RST_FLOPS_i_1\ : label is "soft_lutpair87";
   attribute IS_CE_INVERTED of \RESET_FLOPS[11].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[11].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[11].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[11].RST_FLOPS_i_1\ : label is "soft_lutpair92";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[11].RST_FLOPS_i_1\ : label is "soft_lutpair88";
   attribute IS_CE_INVERTED of \RESET_FLOPS[12].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[12].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[12].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[12].RST_FLOPS_i_1\ : label is "soft_lutpair92";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[12].RST_FLOPS_i_1\ : label is "soft_lutpair88";
   attribute IS_CE_INVERTED of \RESET_FLOPS[13].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[13].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[13].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[13].RST_FLOPS_i_1\ : label is "soft_lutpair93";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[13].RST_FLOPS_i_1\ : label is "soft_lutpair89";
   attribute IS_CE_INVERTED of \RESET_FLOPS[14].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[14].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[14].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[14].RST_FLOPS_i_1\ : label is "soft_lutpair93";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[14].RST_FLOPS_i_1\ : label is "soft_lutpair89";
   attribute IS_CE_INVERTED of \RESET_FLOPS[15].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[15].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[15].RST_FLOPS\ : label is "PRIMITIVE";
   attribute IS_CE_INVERTED of \RESET_FLOPS[1].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[1].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[1].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[1].RST_FLOPS_i_1\ : label is "soft_lutpair87";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[1].RST_FLOPS_i_1\ : label is "soft_lutpair83";
   attribute IS_CE_INVERTED of \RESET_FLOPS[2].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[2].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[2].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[2].RST_FLOPS_i_1\ : label is "soft_lutpair87";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[2].RST_FLOPS_i_1\ : label is "soft_lutpair83";
   attribute IS_CE_INVERTED of \RESET_FLOPS[3].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[3].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[3].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[3].RST_FLOPS_i_1\ : label is "soft_lutpair88";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[3].RST_FLOPS_i_1\ : label is "soft_lutpair84";
   attribute IS_CE_INVERTED of \RESET_FLOPS[4].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[4].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[4].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[4].RST_FLOPS_i_1\ : label is "soft_lutpair88";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[4].RST_FLOPS_i_1\ : label is "soft_lutpair84";
   attribute IS_CE_INVERTED of \RESET_FLOPS[5].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[5].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[5].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[5].RST_FLOPS_i_1\ : label is "soft_lutpair89";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[5].RST_FLOPS_i_1\ : label is "soft_lutpair85";
   attribute IS_CE_INVERTED of \RESET_FLOPS[6].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[6].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[6].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[6].RST_FLOPS_i_1\ : label is "soft_lutpair89";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[6].RST_FLOPS_i_1\ : label is "soft_lutpair85";
   attribute IS_CE_INVERTED of \RESET_FLOPS[7].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[7].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[7].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[7].RST_FLOPS_i_1\ : label is "soft_lutpair90";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[7].RST_FLOPS_i_1\ : label is "soft_lutpair86";
   attribute IS_CE_INVERTED of \RESET_FLOPS[8].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[8].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[8].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[8].RST_FLOPS_i_1\ : label is "soft_lutpair90";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[8].RST_FLOPS_i_1\ : label is "soft_lutpair86";
   attribute IS_CE_INVERTED of \RESET_FLOPS[9].RST_FLOPS\ : label is "1'b0";
   attribute IS_S_INVERTED of \RESET_FLOPS[9].RST_FLOPS\ : label is "1'b0";
   attribute box_type of \RESET_FLOPS[9].RST_FLOPS\ : label is "PRIMITIVE";
-  attribute SOFT_HLUTNM of \RESET_FLOPS[9].RST_FLOPS_i_1\ : label is "soft_lutpair91";
-  attribute SOFT_HLUTNM of \icount_out[0]_i_1\ : label is "soft_lutpair86";
+  attribute SOFT_HLUTNM of \RESET_FLOPS[9].RST_FLOPS_i_1\ : label is "soft_lutpair87";
+  attribute SOFT_HLUTNM of \icount_out[0]_i_1\ : label is "soft_lutpair82";
 begin
   FF_WRACK_0 <= \^ff_wrack_0\;
 FF_WRACK: unisim.vcomponents.FDRE
@@ -12596,10 +12376,10 @@ entity \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ is
     regcea : in STD_LOGIC;
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 11 downto 0 );
+    dina : in STD_LOGIC_VECTOR ( 10 downto 0 );
     injectsbiterra : in STD_LOGIC;
     injectdbiterra : in STD_LOGIC;
-    douta : out STD_LOGIC_VECTOR ( 11 downto 0 );
+    douta : out STD_LOGIC_VECTOR ( 10 downto 0 );
     sbiterra : out STD_LOGIC;
     dbiterra : out STD_LOGIC;
     clkb : in STD_LOGIC;
@@ -12608,10 +12388,10 @@ entity \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ is
     regceb : in STD_LOGIC;
     web : in STD_LOGIC_VECTOR ( 0 to 0 );
     addrb : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    dinb : in STD_LOGIC_VECTOR ( 11 downto 0 );
+    dinb : in STD_LOGIC_VECTOR ( 10 downto 0 );
     injectsbiterrb : in STD_LOGIC;
     injectdbiterrb : in STD_LOGIC;
-    doutb : out STD_LOGIC_VECTOR ( 11 downto 0 );
+    doutb : out STD_LOGIC_VECTOR ( 10 downto 0 );
     sbiterrb : out STD_LOGIC;
     dbiterrb : out STD_LOGIC
   );
@@ -12622,9 +12402,9 @@ entity \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ is
   attribute AUTO_SLEEP_TIME : integer;
   attribute AUTO_SLEEP_TIME of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 0;
   attribute BYTE_WRITE_WIDTH_A : integer;
-  attribute BYTE_WRITE_WIDTH_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute BYTE_WRITE_WIDTH_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute BYTE_WRITE_WIDTH_B : integer;
-  attribute BYTE_WRITE_WIDTH_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute BYTE_WRITE_WIDTH_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute CLOCKING_MODE : integer;
   attribute CLOCKING_MODE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 0;
   attribute ECC_MODE : integer;
@@ -12632,7 +12412,7 @@ entity \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ is
   attribute MAX_NUM_CHAR : integer;
   attribute MAX_NUM_CHAR of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 0;
   attribute MEMORY_INIT_FILE : string;
-  attribute MEMORY_INIT_FILE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is "mode_2_memory_3_sp.mem";
+  attribute MEMORY_INIT_FILE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is "mode_2_memory_1_wb.mem";
   attribute MEMORY_INIT_PARAM : string;
   attribute MEMORY_INIT_PARAM of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is "";
   attribute MEMORY_OPTIMIZATION : string;
@@ -12640,7 +12420,7 @@ entity \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ is
   attribute MEMORY_PRIMITIVE : integer;
   attribute MEMORY_PRIMITIVE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 0;
   attribute MEMORY_SIZE : integer;
-  attribute MEMORY_SIZE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 3072;
+  attribute MEMORY_SIZE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 2816;
   attribute MEMORY_TYPE : integer;
   attribute MEMORY_TYPE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 3;
   attribute MESSAGE_CONTROL : integer;
@@ -12662,17 +12442,17 @@ entity \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ is
   attribute P_MEMORY_PRIMITIVE : string;
   attribute P_MEMORY_PRIMITIVE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is "auto";
   attribute P_MIN_WIDTH_DATA : integer;
-  attribute P_MIN_WIDTH_DATA of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute P_MIN_WIDTH_DATA of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute P_MIN_WIDTH_DATA_A : integer;
-  attribute P_MIN_WIDTH_DATA_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute P_MIN_WIDTH_DATA_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute P_MIN_WIDTH_DATA_B : integer;
-  attribute P_MIN_WIDTH_DATA_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute P_MIN_WIDTH_DATA_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute P_MIN_WIDTH_DATA_ECC : integer;
-  attribute P_MIN_WIDTH_DATA_ECC of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute P_MIN_WIDTH_DATA_ECC of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute P_MIN_WIDTH_DATA_LDW : integer;
   attribute P_MIN_WIDTH_DATA_LDW of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 4;
   attribute P_MIN_WIDTH_DATA_SHFT : integer;
-  attribute P_MIN_WIDTH_DATA_SHFT of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute P_MIN_WIDTH_DATA_SHFT of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute P_NUM_COLS_WRITE_A : integer;
   attribute P_NUM_COLS_WRITE_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 1;
   attribute P_NUM_COLS_WRITE_B : integer;
@@ -12704,13 +12484,13 @@ entity \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ is
   attribute P_WIDTH_ADDR_WRITE_B : integer;
   attribute P_WIDTH_ADDR_WRITE_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 8;
   attribute P_WIDTH_COL_WRITE_A : integer;
-  attribute P_WIDTH_COL_WRITE_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute P_WIDTH_COL_WRITE_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute P_WIDTH_COL_WRITE_B : integer;
-  attribute P_WIDTH_COL_WRITE_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute P_WIDTH_COL_WRITE_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute READ_DATA_WIDTH_A : integer;
-  attribute READ_DATA_WIDTH_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute READ_DATA_WIDTH_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute READ_DATA_WIDTH_B : integer;
-  attribute READ_DATA_WIDTH_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute READ_DATA_WIDTH_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute READ_LATENCY_A : integer;
   attribute READ_LATENCY_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 1;
   attribute READ_LATENCY_B : integer;
@@ -12728,9 +12508,9 @@ entity \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ is
   attribute WAKEUP_TIME : integer;
   attribute WAKEUP_TIME of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 0;
   attribute WRITE_DATA_WIDTH_A : integer;
-  attribute WRITE_DATA_WIDTH_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute WRITE_DATA_WIDTH_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute WRITE_DATA_WIDTH_B : integer;
-  attribute WRITE_DATA_WIDTH_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 12;
+  attribute WRITE_DATA_WIDTH_B of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 11;
   attribute WRITE_MODE_A : integer;
   attribute WRITE_MODE_A of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ : entity is 1;
   attribute WRITE_MODE_B : integer;
@@ -12741,7 +12521,7 @@ end \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\;
 
 architecture STRUCTURE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameterized0\ is
   signal \<const0>\ : STD_LOGIC;
-  signal \NLW_gen_rd_a.douta_reg_reg_DOADO_UNCONNECTED\ : STD_LOGIC_VECTOR ( 15 downto 12 );
+  signal \NLW_gen_rd_a.douta_reg_reg_DOADO_UNCONNECTED\ : STD_LOGIC_VECTOR ( 15 downto 11 );
   signal \NLW_gen_rd_a.douta_reg_reg_DOBDO_UNCONNECTED\ : STD_LOGIC_VECTOR ( 15 downto 0 );
   signal \NLW_gen_rd_a.douta_reg_reg_DOPADOP_UNCONNECTED\ : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal \NLW_gen_rd_a.douta_reg_reg_DOPBDOP_UNCONNECTED\ : STD_LOGIC_VECTOR ( 1 downto 0 );
@@ -12750,15 +12530,15 @@ architecture STRUCTURE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameter
   attribute \MEM.PORTA.ADDRESS_END\ : integer;
   attribute \MEM.PORTA.ADDRESS_END\ of \gen_rd_a.douta_reg_reg\ : label is 1023;
   attribute \MEM.PORTA.DATA_BIT_LAYOUT\ : string;
-  attribute \MEM.PORTA.DATA_BIT_LAYOUT\ of \gen_rd_a.douta_reg_reg\ : label is "p0_d12";
+  attribute \MEM.PORTA.DATA_BIT_LAYOUT\ of \gen_rd_a.douta_reg_reg\ : label is "p0_d11";
   attribute \MEM.PORTA.DATA_LSB\ : integer;
   attribute \MEM.PORTA.DATA_LSB\ of \gen_rd_a.douta_reg_reg\ : label is 0;
   attribute \MEM.PORTA.DATA_MSB\ : integer;
-  attribute \MEM.PORTA.DATA_MSB\ of \gen_rd_a.douta_reg_reg\ : label is 11;
+  attribute \MEM.PORTA.DATA_MSB\ of \gen_rd_a.douta_reg_reg\ : label is 10;
   attribute METHODOLOGY_DRC_VIOS : string;
   attribute METHODOLOGY_DRC_VIOS of \gen_rd_a.douta_reg_reg\ : label is "{SYNTH-6 {cell *THIS*}}";
   attribute RTL_RAM_BITS : integer;
-  attribute RTL_RAM_BITS of \gen_rd_a.douta_reg_reg\ : label is 3072;
+  attribute RTL_RAM_BITS of \gen_rd_a.douta_reg_reg\ : label is 2816;
   attribute RTL_RAM_NAME : string;
   attribute RTL_RAM_NAME of \gen_rd_a.douta_reg_reg\ : label is "gen_rd_a.douta_reg";
   attribute bram_addr_begin : integer;
@@ -12768,11 +12548,10 @@ architecture STRUCTURE of \mb_design_axi_quad_spi_0_0_xpm_memory_base__parameter
   attribute bram_slice_begin : integer;
   attribute bram_slice_begin of \gen_rd_a.douta_reg_reg\ : label is 0;
   attribute bram_slice_end : integer;
-  attribute bram_slice_end of \gen_rd_a.douta_reg_reg\ : label is 11;
+  attribute bram_slice_end of \gen_rd_a.douta_reg_reg\ : label is 10;
 begin
   dbiterra <= \<const0>\;
   dbiterrb <= \<const0>\;
-  doutb(11) <= \<const0>\;
   doutb(10) <= \<const0>\;
   doutb(9) <= \<const0>\;
   doutb(8) <= \<const0>\;
@@ -12802,22 +12581,22 @@ GND: unisim.vcomponents.GND
       INITP_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INITP_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INITP_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
-      INIT_00 => X"0001000100010008000800010001000100080000000800000008000800080001",
-      INIT_01 => X"0001000100010001000100010001000100080008000100010008000800010001",
-      INIT_02 => X"0008000100010001000800010001000100010001000100010001000100010001",
-      INIT_03 => X"00010001000103180308000100010D880001000100080D9800010D8800010000",
-      INIT_04 => X"0001000100010001000800010001000100010001000100010001000800010001",
-      INIT_05 => X"0001000100010001000100080001000100010001000100010001000100010001",
-      INIT_06 => X"0001000100010598058800010001000100010001000100010001000100010000",
-      INIT_07 => X"0001000100010001000100000001000100010001000800010001000100010001",
-      INIT_08 => X"0001000100010001000100000001000100010001000000010001000100010001",
+      INIT_00 => X"0001000100010001000800010001000100010000000800000008000800080001",
+      INIT_01 => X"0001000100010001000100010001000100010001000100010001000100010001",
+      INIT_02 => X"0001000100010001000100010001000100010001000100010001000100010008",
+      INIT_03 => X"0001000100010001018800010001000100010001000800010001068800010001",
+      INIT_04 => X"0001000100010001000800010001000100010001000100010001000100010001",
+      INIT_05 => X"0001000100010001000100010001000100010001000100010001000800010001",
+      INIT_06 => X"0001000100010001028800010001000100010001000100010001000100010000",
+      INIT_07 => X"0001000100010001000100000001000100010001000000010001000100010001",
+      INIT_08 => X"0001000100010001000100010001000100010001000100010001000100010001",
       INIT_09 => X"0008000100010001000100010001000100010001000100010001000100010008",
-      INIT_0A => X"0001000100010001000800010001000100080000000100010001000100010001",
-      INIT_0B => X"0001000100010338032800010000000100010001000100010001000100010001",
+      INIT_0A => X"0001000100010001000000010001000100010001000100010008000100010001",
+      INIT_0B => X"000100010001000101A800010000000100010001000100010001000100010001",
       INIT_0C => X"0001000100010001000100010001000100000001000100010001000100010001",
-      INIT_0D => X"0001000100010008000100010001000800010001000100010001000100010001",
-      INIT_0E => X"00010001000105D805C800010008000800080001000100000008000800080008",
-      INIT_0F => X"0000000100010001000100010001000100010001000100010001000100010000",
+      INIT_0D => X"0001000100010001000100010001000800010001000100010001000100010001",
+      INIT_0E => X"000100010001000102C8000100010001000100010001000102C8000100010001",
+      INIT_0F => X"0001000100010001000100010001000100010001000100010001000100010001",
       INIT_10 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INIT_11 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INIT_12 => X"0000000000000000000000000000000000000000000000000000000000000000",
@@ -12890,12 +12669,12 @@ GND: unisim.vcomponents.GND
       ADDRBWRADDR(13 downto 0) => B"11111111111111",
       CLKARDCLK => clka,
       CLKBWRCLK => '0',
-      DIADI(15 downto 0) => B"0000111111111111",
+      DIADI(15 downto 0) => B"0000011111111111",
       DIBDI(15 downto 0) => B"1111111111111111",
       DIPADIP(1 downto 0) => B"00",
       DIPBDIP(1 downto 0) => B"11",
-      DOADO(15 downto 12) => \NLW_gen_rd_a.douta_reg_reg_DOADO_UNCONNECTED\(15 downto 12),
-      DOADO(11 downto 0) => douta(11 downto 0),
+      DOADO(15 downto 11) => \NLW_gen_rd_a.douta_reg_reg_DOADO_UNCONNECTED\(15 downto 11),
+      DOADO(10 downto 0) => douta(10 downto 0),
       DOBDO(15 downto 0) => \NLW_gen_rd_a.douta_reg_reg_DOBDO_UNCONNECTED\(15 downto 0),
       DOPADOP(1 downto 0) => \NLW_gen_rd_a.douta_reg_reg_DOPADOP_UNCONNECTED\(1 downto 0),
       DOPBDOP(1 downto 0) => \NLW_gen_rd_a.douta_reg_reg_DOPBDOP_UNCONNECTED\(1 downto 0),
@@ -14420,7 +14199,7 @@ entity mb_design_axi_quad_spi_0_0_cross_clk_sync_fifo_1 is
     \FIFO_EXISTS.DUAL_MD_INTR_GEN.SPISR_0_CMD_Error_d1_reg\ : out STD_LOGIC;
     \ip_irpt_enable_reg_reg[8]\ : out STD_LOGIC;
     MODF_strobe_reg : out STD_LOGIC;
-    \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ : out STD_LOGIC;
+    \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ : out STD_LOGIC;
     \SS_O_reg[0]\ : out STD_LOGIC;
     ext_spi_clk : in STD_LOGIC;
     reset2ip_reset_int : in STD_LOGIC;
@@ -14449,7 +14228,7 @@ entity mb_design_axi_quad_spi_0_0_cross_clk_sync_fifo_1 is
     SPISEL_sync : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 0 to 0 );
     transfer_start_d2 : in STD_LOGIC;
-    \QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_reg\ : in STD_LOGIC;
+    \QSPI_LOOK_UP_MODE_2_MEMORY_1.CMD_decoded_int_reg\ : in STD_LOGIC;
     spisel_d1_reg : in STD_LOGIC;
     empty : in STD_LOGIC;
     \CONTROL_REG_5_9_GENERATE[8].SPICR_data_int_reg[8]\ : in STD_LOGIC;
@@ -14532,7 +14311,7 @@ begin
 \LOGIC_GENERATION_CDC.CMD_ERR_S2AX_1\: entity work.mb_design_axi_quad_spi_0_0_cdc_sync
      port map (
       \FIFO_EXISTS.DUAL_MD_INTR_GEN.SPISR_0_CMD_Error_d1_reg\ => \FIFO_EXISTS.DUAL_MD_INTR_GEN.SPISR_0_CMD_Error_d1_reg\,
-      \QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_reg\ => \QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_reg\,
+      \QSPI_LOOK_UP_MODE_2_MEMORY_1.CMD_decoded_int_reg\ => \QSPI_LOOK_UP_MODE_2_MEMORY_1.CMD_decoded_int_reg\,
       s_axi_aclk => s_axi_aclk
     );
 \LOGIC_GENERATION_CDC.DRR_OVERRUN_S2AX_1\: entity work.mb_design_axi_quad_spi_0_0_cdc_sync_17
@@ -14625,7 +14404,7 @@ begin
     );
 \LOGIC_GENERATION_CDC.SPICR_5_TXFIFO_AX2S_1\: entity work.\mb_design_axi_quad_spi_0_0_cdc_sync__parameterized0_22\
      port map (
-      \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\,
+      \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\,
       ext_spi_clk => ext_spi_clk,
       prmry_in => prmry_in
     );
@@ -15786,16 +15565,23 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
   port (
-    douta : out STD_LOGIC_VECTOR ( 10 downto 0 );
+    douta : out STD_LOGIC_VECTOR ( 8 downto 0 );
     \qspi_cntrl_ps_reg[0]\ : out STD_LOGIC;
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : out STD_LOGIC;
-    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg\ : out STD_LOGIC;
-    \qspi_cntrl_ps_reg[2]\ : out STD_LOGIC;
-    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg_0\ : out STD_LOGIC;
     \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\ : out STD_LOGIC;
+    \qspi_cntrl_ps_reg[2]\ : out STD_LOGIC;
     QSPI_IO1_T : out STD_LOGIC;
+    QSPI_IO0_T : out STD_LOGIC;
+    \qspi_cntrl_ps_reg[1]\ : out STD_LOGIC;
+    D : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[4]\ : out STD_LOGIC;
+    \p_34_out__0\ : out STD_LOGIC;
+    E : out STD_LOGIC_VECTOR ( 0 to 0 );
+    Serial_Dout_019_in : out STD_LOGIC;
+    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg\ : out STD_LOGIC;
+    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_reg\ : out STD_LOGIC;
+    \p_36_out__0\ : out STD_LOGIC;
     transfer_start_reg : out STD_LOGIC;
-    \IO0_T_control0__0\ : out STD_LOGIC;
     ext_spi_clk : in STD_LOGIC;
     Rst_to_spi : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 7 downto 0 );
@@ -15803,11 +15589,19 @@ entity mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
     SPIXfer_done_int_pulse : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 2 downto 0 );
     empty : in STD_LOGIC;
-    \qspi_cntrl_ns131_out__3\ : in STD_LOGIC;
     \qspi_cntrl_ns129_out__3\ : in STD_LOGIC;
-    \gen_rd_a.douta_reg_reg\ : in STD_LOGIC;
     \master_tri_state_en_control1__1\ : in STD_LOGIC;
-    \qspi_cntrl_ns132_out__0\ : in STD_LOGIC;
+    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : in STD_LOGIC;
+    io1_i_sync : in STD_LOGIC;
+    io0_i_sync : in STD_LOGIC;
+    io2_i_sync : in STD_LOGIC;
+    \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    io3_i_sync : in STD_LOGIC;
+    sck_d3 : in STD_LOGIC;
+    \gen_rd_a.douta_reg_reg\ : in STD_LOGIC;
+    \qspi_cntrl_ps_reg[1]_0\ : in STD_LOGIC;
+    \gen_rd_a.douta_reg_reg_0\ : in STD_LOGIC;
+    \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
     SPIXfer_done_int : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -15815,18 +15609,30 @@ entity mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
 end mb_design_axi_quad_spi_0_0_xpm_memory_sprom;
 
 architecture STRUCTURE of mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
+  signal Data_Dir_int : STD_LOGIC;
   signal Look_up_op : STD_LOGIC_VECTOR ( 0 to 0 );
   signal QSPI_IO1_T_i_3_n_0 : STD_LOGIC;
   signal QSPI_IO1_T_i_4_n_0 : STD_LOGIC;
-  signal \^douta\ : STD_LOGIC_VECTOR ( 10 downto 0 );
+  signal QSPI_IO1_T_i_5_n_0 : STD_LOGIC;
+  signal \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_1_reg\ : STD_LOGIC;
+  signal \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_5_n_0\ : STD_LOGIC;
+  signal \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_2_reg\ : STD_LOGIC;
+  signal \^ratio_of_2_generate.rx_shft_reg_mode_0011_reg[4]\ : STD_LOGIC;
+  signal \^serial_dout_019_in\ : STD_LOGIC;
+  signal \^douta\ : STD_LOGIC_VECTOR ( 8 downto 0 );
+  signal \^p_34_out__0\ : STD_LOGIC;
   signal \^qspi_cntrl_ps_reg[2]\ : STD_LOGIC;
   signal NLW_xpm_memory_base_inst_dbiterra_UNCONNECTED : STD_LOGIC;
   signal NLW_xpm_memory_base_inst_dbiterrb_UNCONNECTED : STD_LOGIC;
   signal NLW_xpm_memory_base_inst_sbiterra_UNCONNECTED : STD_LOGIC;
   signal NLW_xpm_memory_base_inst_sbiterrb_UNCONNECTED : STD_LOGIC;
-  signal NLW_xpm_memory_base_inst_doutb_UNCONNECTED : STD_LOGIC_VECTOR ( 11 downto 0 );
+  signal NLW_xpm_memory_base_inst_doutb_UNCONNECTED : STD_LOGIC_VECTOR ( 10 downto 0 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \qspi_cntrl_ps[2]_i_2\ : label is "soft_lutpair68";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_6\ : label is "soft_lutpair69";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_3\ : label is "soft_lutpair69";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_4\ : label is "soft_lutpair70";
+  attribute SOFT_HLUTNM of \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_5\ : label is "soft_lutpair70";
+  attribute SOFT_HLUTNM of \qspi_cntrl_ps[2]_i_3\ : label is "soft_lutpair68";
   attribute SOFT_HLUTNM of transfer_start_i_2 : label is "soft_lutpair68";
   attribute ADDR_WIDTH_A : integer;
   attribute ADDR_WIDTH_A of xpm_memory_base_inst : label is 8;
@@ -15835,9 +15641,9 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
   attribute AUTO_SLEEP_TIME : integer;
   attribute AUTO_SLEEP_TIME of xpm_memory_base_inst : label is 0;
   attribute BYTE_WRITE_WIDTH_A : integer;
-  attribute BYTE_WRITE_WIDTH_A of xpm_memory_base_inst : label is 12;
+  attribute BYTE_WRITE_WIDTH_A of xpm_memory_base_inst : label is 11;
   attribute BYTE_WRITE_WIDTH_B : integer;
-  attribute BYTE_WRITE_WIDTH_B of xpm_memory_base_inst : label is 12;
+  attribute BYTE_WRITE_WIDTH_B of xpm_memory_base_inst : label is 11;
   attribute CLOCKING_MODE : integer;
   attribute CLOCKING_MODE of xpm_memory_base_inst : label is 0;
   attribute ECC_MODE : integer;
@@ -15851,13 +15657,13 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
   attribute \MEM.ADDRESS_SPACE_DATA_LSB\ : integer;
   attribute \MEM.ADDRESS_SPACE_DATA_LSB\ of xpm_memory_base_inst : label is 0;
   attribute \MEM.ADDRESS_SPACE_DATA_MSB\ : integer;
-  attribute \MEM.ADDRESS_SPACE_DATA_MSB\ of xpm_memory_base_inst : label is 11;
+  attribute \MEM.ADDRESS_SPACE_DATA_MSB\ of xpm_memory_base_inst : label is 10;
   attribute \MEM.ADDRESS_SPACE_END\ : integer;
   attribute \MEM.ADDRESS_SPACE_END\ of xpm_memory_base_inst : label is 1023;
   attribute \MEM.CORE_MEMORY_WIDTH\ : integer;
-  attribute \MEM.CORE_MEMORY_WIDTH\ of xpm_memory_base_inst : label is 12;
+  attribute \MEM.CORE_MEMORY_WIDTH\ of xpm_memory_base_inst : label is 11;
   attribute MEMORY_INIT_FILE : string;
-  attribute MEMORY_INIT_FILE of xpm_memory_base_inst : label is "mode_2_memory_3_sp.mem";
+  attribute MEMORY_INIT_FILE of xpm_memory_base_inst : label is "mode_2_memory_1_wb.mem";
   attribute MEMORY_INIT_PARAM : string;
   attribute MEMORY_INIT_PARAM of xpm_memory_base_inst : label is "";
   attribute MEMORY_OPTIMIZATION : string;
@@ -15865,7 +15671,7 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
   attribute MEMORY_PRIMITIVE : integer;
   attribute MEMORY_PRIMITIVE of xpm_memory_base_inst : label is 0;
   attribute MEMORY_SIZE : integer;
-  attribute MEMORY_SIZE of xpm_memory_base_inst : label is 3072;
+  attribute MEMORY_SIZE of xpm_memory_base_inst : label is 2816;
   attribute MEMORY_TYPE : integer;
   attribute MEMORY_TYPE of xpm_memory_base_inst : label is 3;
   attribute MESSAGE_CONTROL : integer;
@@ -15885,17 +15691,17 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
   attribute P_MEMORY_PRIMITIVE : string;
   attribute P_MEMORY_PRIMITIVE of xpm_memory_base_inst : label is "auto";
   attribute P_MIN_WIDTH_DATA : integer;
-  attribute P_MIN_WIDTH_DATA of xpm_memory_base_inst : label is 12;
+  attribute P_MIN_WIDTH_DATA of xpm_memory_base_inst : label is 11;
   attribute P_MIN_WIDTH_DATA_A : integer;
-  attribute P_MIN_WIDTH_DATA_A of xpm_memory_base_inst : label is 12;
+  attribute P_MIN_WIDTH_DATA_A of xpm_memory_base_inst : label is 11;
   attribute P_MIN_WIDTH_DATA_B : integer;
-  attribute P_MIN_WIDTH_DATA_B of xpm_memory_base_inst : label is 12;
+  attribute P_MIN_WIDTH_DATA_B of xpm_memory_base_inst : label is 11;
   attribute P_MIN_WIDTH_DATA_ECC : integer;
-  attribute P_MIN_WIDTH_DATA_ECC of xpm_memory_base_inst : label is 12;
+  attribute P_MIN_WIDTH_DATA_ECC of xpm_memory_base_inst : label is 11;
   attribute P_MIN_WIDTH_DATA_LDW : integer;
   attribute P_MIN_WIDTH_DATA_LDW of xpm_memory_base_inst : label is 4;
   attribute P_MIN_WIDTH_DATA_SHFT : integer;
-  attribute P_MIN_WIDTH_DATA_SHFT of xpm_memory_base_inst : label is 12;
+  attribute P_MIN_WIDTH_DATA_SHFT of xpm_memory_base_inst : label is 11;
   attribute P_NUM_COLS_WRITE_A : integer;
   attribute P_NUM_COLS_WRITE_A of xpm_memory_base_inst : label is 1;
   attribute P_NUM_COLS_WRITE_B : integer;
@@ -15927,13 +15733,13 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
   attribute P_WIDTH_ADDR_WRITE_B : integer;
   attribute P_WIDTH_ADDR_WRITE_B of xpm_memory_base_inst : label is 8;
   attribute P_WIDTH_COL_WRITE_A : integer;
-  attribute P_WIDTH_COL_WRITE_A of xpm_memory_base_inst : label is 12;
+  attribute P_WIDTH_COL_WRITE_A of xpm_memory_base_inst : label is 11;
   attribute P_WIDTH_COL_WRITE_B : integer;
-  attribute P_WIDTH_COL_WRITE_B of xpm_memory_base_inst : label is 12;
+  attribute P_WIDTH_COL_WRITE_B of xpm_memory_base_inst : label is 11;
   attribute READ_DATA_WIDTH_A : integer;
-  attribute READ_DATA_WIDTH_A of xpm_memory_base_inst : label is 12;
+  attribute READ_DATA_WIDTH_A of xpm_memory_base_inst : label is 11;
   attribute READ_DATA_WIDTH_B : integer;
-  attribute READ_DATA_WIDTH_B of xpm_memory_base_inst : label is 12;
+  attribute READ_DATA_WIDTH_B of xpm_memory_base_inst : label is 11;
   attribute READ_LATENCY_A : integer;
   attribute READ_LATENCY_A of xpm_memory_base_inst : label is 1;
   attribute READ_LATENCY_B : integer;
@@ -15951,9 +15757,9 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
   attribute WAKEUP_TIME : integer;
   attribute WAKEUP_TIME of xpm_memory_base_inst : label is 0;
   attribute WRITE_DATA_WIDTH_A : integer;
-  attribute WRITE_DATA_WIDTH_A of xpm_memory_base_inst : label is 12;
+  attribute WRITE_DATA_WIDTH_A of xpm_memory_base_inst : label is 11;
   attribute WRITE_DATA_WIDTH_B : integer;
-  attribute WRITE_DATA_WIDTH_B of xpm_memory_base_inst : label is 12;
+  attribute WRITE_DATA_WIDTH_B of xpm_memory_base_inst : label is 11;
   attribute WRITE_MODE_A : integer;
   attribute WRITE_MODE_A of xpm_memory_base_inst : label is 1;
   attribute WRITE_MODE_B : integer;
@@ -15961,7 +15767,12 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_xpm_memory_sprom is
   attribute XPM_MODULE : string;
   attribute XPM_MODULE of xpm_memory_base_inst : label is "TRUE";
 begin
-  douta(10 downto 0) <= \^douta\(10 downto 0);
+  \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_reg\ <= \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_1_reg\;
+  \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg\ <= \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_2_reg\;
+  \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[4]\ <= \^ratio_of_2_generate.rx_shft_reg_mode_0011_reg[4]\;
+  Serial_Dout_019_in <= \^serial_dout_019_in\;
+  douta(8 downto 0) <= \^douta\(8 downto 0);
+  \p_34_out__0\ <= \^p_34_out__0\;
   \qspi_cntrl_ps_reg[2]\ <= \^qspi_cntrl_ps_reg[2]\;
 \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to_i_1\: unisim.vcomponents.LUT2
     generic map(
@@ -15972,22 +15783,26 @@ begin
       I1 => Look_up_op(0),
       O => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\
     );
-QSPI_IO0_T_i_4: unisim.vcomponents.LUT2
+QSPI_IO0_T_i_3: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"8"
+      INIT => X"08008888F8FF8888"
     )
         port map (
       I0 => \^douta\(5),
       I1 => \^douta\(4),
-      O => \IO0_T_control0__0\
+      I2 => \^douta\(6),
+      I3 => empty,
+      I4 => \qspi_cntrl_ns129_out__3\,
+      I5 => Data_Dir_int,
+      O => QSPI_IO0_T
     );
 QSPI_IO1_T_i_1: unisim.vcomponents.LUT6
     generic map(
       INIT => X"FFFF9FFF0F0F9FFF"
     )
         port map (
-      I0 => \^douta\(9),
-      I1 => \^douta\(8),
+      I0 => \^douta\(8),
+      I1 => \^douta\(7),
       I2 => \master_tri_state_en_control1__1\,
       I3 => Q(2),
       I4 => Q(1),
@@ -15996,68 +15811,165 @@ QSPI_IO1_T_i_1: unisim.vcomponents.LUT6
     );
 QSPI_IO1_T_i_3: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"EBEBEBFFEBEBEBAA"
+      INIT => X"FBEAFBFBFAFAFAFA"
     )
         port map (
       I0 => Q(2),
-      I1 => \^douta\(4),
-      I2 => \^douta\(5),
-      I3 => \qspi_cntrl_ns132_out__0\,
-      I4 => Q(0),
-      I5 => QSPI_IO1_T_i_4_n_0,
+      I1 => \^qspi_cntrl_ps_reg[2]\,
+      I2 => QSPI_IO1_T_i_4_n_0,
+      I3 => QSPI_IO1_T_i_5_n_0,
+      I4 => Data_Dir_int,
+      I5 => \qspi_cntrl_ns129_out__3\,
       O => QSPI_IO1_T_i_3_n_0
     );
-QSPI_IO1_T_i_4: unisim.vcomponents.LUT6
+QSPI_IO1_T_i_4: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"9FFF9F009F009FFF"
-    )
-        port map (
-      I0 => \^douta\(9),
-      I1 => \^douta\(8),
-      I2 => \^douta\(10),
-      I3 => \gen_rd_a.douta_reg_reg\,
-      I4 => \^douta\(5),
-      I5 => \^douta\(4),
-      O => QSPI_IO1_T_i_4_n_0
-    );
-\QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_3\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"55551DDD00000000"
+      INIT => X"9"
     )
         port map (
       I0 => \^douta\(5),
-      I1 => \gen_rd_a.douta_reg_reg\,
-      I2 => \^douta\(9),
-      I3 => \^douta\(10),
-      I4 => \^qspi_cntrl_ps_reg[2]\,
-      I5 => Q(1),
-      O => \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\
+      I1 => \^douta\(4),
+      O => QSPI_IO1_T_i_4_n_0
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_6\: unisim.vcomponents.LUT6
+QSPI_IO1_T_i_5: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"DCDDDCCC8C888CCC"
+      INIT => X"9"
     )
         port map (
-      I0 => \^qspi_cntrl_ps_reg[2]\,
-      I1 => \^douta\(4),
-      I2 => \^douta\(10),
-      I3 => \qspi_cntrl_ns131_out__3\,
-      I4 => \qspi_cntrl_ns129_out__3\,
-      I5 => \^douta\(8),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg_0\
+      I0 => \^douta\(7),
+      I1 => \^douta\(8),
+      O => QSPI_IO1_T_i_5_n_0
     );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_1_i_7\: unisim.vcomponents.LUT6
+\QSPI_MODE_2_T_CONTROL.QSPI_IO2_T_i_3\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"DCDDDCCC8C888CCC"
+      INIT => X"27773333"
     )
         port map (
       I0 => \^qspi_cntrl_ps_reg[2]\,
       I1 => \^douta\(5),
-      I2 => \^douta\(10),
-      I3 => \qspi_cntrl_ns131_out__3\,
+      I2 => \^douta\(8),
+      I3 => Data_Dir_int,
       I4 => \qspi_cntrl_ns129_out__3\,
-      I5 => \^douta\(9),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg\
+      O => \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_6\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"7"
+    )
+        port map (
+      I0 => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_2_reg\,
+      I1 => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_1_reg\,
+      O => \^serial_dout_019_in\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_7\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FAFBFAEAAAAAAAAA"
+    )
+        port map (
+      I0 => \gen_rd_a.douta_reg_reg_0\,
+      I1 => \^qspi_cntrl_ps_reg[2]\,
+      I2 => \^douta\(4),
+      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_5_n_0\,
+      I4 => \^douta\(7),
+      I5 => \qspi_cntrl_ps_reg[1]_0\,
+      O => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_1_reg\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_3\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"1"
+    )
+        port map (
+      I0 => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_1_reg\,
+      I1 => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_2_reg\,
+      O => \^ratio_of_2_generate.rx_shft_reg_mode_0011_reg[4]\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_4\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"2"
+    )
+        port map (
+      I0 => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_2_reg\,
+      I1 => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_1_reg\,
+      O => \p_36_out__0\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_i_5\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"2"
+    )
+        port map (
+      I0 => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_1_reg\,
+      I1 => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_2_reg\,
+      O => \^p_34_out__0\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_2\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FAFBFAEAAAAAAAAA"
+    )
+        port map (
+      I0 => \gen_rd_a.douta_reg_reg\,
+      I1 => \^qspi_cntrl_ps_reg[2]\,
+      I2 => \^douta\(5),
+      I3 => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_5_n_0\,
+      I4 => \^douta\(8),
+      I5 => \qspi_cntrl_ps_reg[1]_0\,
+      O => \^ratio_of_2_generate.ratio_2_cap_qspi_quad_mode_other_mem_gen.serial_dout_2_reg\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_5\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FDFFFFFFFFFFFFFF"
+    )
+        port map (
+      I0 => \^douta\(6),
+      I1 => \^douta\(3),
+      I2 => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(2),
+      I3 => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(1),
+      I4 => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(0),
+      I5 => Data_Dir_int,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_i_5_n_0\
+    );
+\RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[1]_i_1\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"10"
+    )
+        port map (
+      I0 => Data_Dir_int,
+      I1 => sck_d3,
+      I2 => \^serial_dout_019_in\,
+      O => E(0)
+    );
+\RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[4]_i_1\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"FFE400E4"
+    )
+        port map (
+      I0 => \^p_34_out__0\,
+      I1 => io3_i_sync,
+      I2 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\(1),
+      I3 => \^ratio_of_2_generate.rx_shft_reg_mode_0011_reg[4]\,
+      I4 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\(2),
+      O => D(2)
+    );
+\RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[5]_i_1\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"FFE400E4"
+    )
+        port map (
+      I0 => \^p_34_out__0\,
+      I1 => io2_i_sync,
+      I2 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\(0),
+      I3 => \^ratio_of_2_generate.rx_shft_reg_mode_0011_reg[4]\,
+      I4 => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\(1),
+      O => D(1)
+    );
+\RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011[7]_i_1\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"B8"
+    )
+        port map (
+      I0 => io1_i_sync,
+      I1 => \^ratio_of_2_generate.rx_shft_reg_mode_0011_reg[4]\,
+      I2 => io0_i_sync,
+      O => D(0)
     );
 \qspi_cntrl_ps[0]_i_3\: unisim.vcomponents.LUT6
     generic map(
@@ -16072,12 +15984,25 @@ QSPI_IO1_T_i_4: unisim.vcomponents.LUT6
       I5 => \^douta\(2),
       O => \qspi_cntrl_ps_reg[0]\
     );
-\qspi_cntrl_ps[2]_i_2\: unisim.vcomponents.LUT3
+\qspi_cntrl_ps[1]_i_3\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"002AFF7FFF3FFF3F"
+    )
+        port map (
+      I0 => \^douta\(6),
+      I1 => \qspi_cntrl_ns129_out__3\,
+      I2 => Data_Dir_int,
+      I3 => Q(0),
+      I4 => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\,
+      I5 => empty,
+      O => \qspi_cntrl_ps_reg[1]\
+    );
+\qspi_cntrl_ps[2]_i_3\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"F4"
     )
         port map (
-      I0 => \^douta\(7),
+      I0 => \^douta\(6),
       I1 => empty,
       I2 => Q(0),
       O => \^qspi_cntrl_ps_reg[2]\
@@ -16089,7 +16014,7 @@ transfer_start_i_2: unisim.vcomponents.LUT4
         port map (
       I0 => \^douta\(2),
       I1 => SPIXfer_done_int,
-      I2 => \^douta\(7),
+      I2 => \^douta\(6),
       I3 => empty,
       O => transfer_start_reg
     );
@@ -16101,11 +16026,12 @@ xpm_memory_base_inst: entity work.\mb_design_axi_quad_spi_0_0_xpm_memory_base__p
       clkb => '0',
       dbiterra => NLW_xpm_memory_base_inst_dbiterra_UNCONNECTED,
       dbiterrb => NLW_xpm_memory_base_inst_dbiterrb_UNCONNECTED,
-      dina(11 downto 0) => B"000000000000",
-      dinb(11 downto 0) => B"000000000000",
-      douta(11 downto 1) => \^douta\(10 downto 0),
+      dina(10 downto 0) => B"00000000000",
+      dinb(10 downto 0) => B"00000000000",
+      douta(10) => Data_Dir_int,
+      douta(9 downto 1) => \^douta\(8 downto 0),
       douta(0) => Look_up_op(0),
-      doutb(11 downto 0) => NLW_xpm_memory_base_inst_doutb_UNCONNECTED(11 downto 0),
+      doutb(10 downto 0) => NLW_xpm_memory_base_inst_doutb_UNCONNECTED(10 downto 0),
       ena => '0',
       enb => '0',
       injectdbiterra => '0',
@@ -16129,32 +16055,46 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity mb_design_axi_quad_spi_0_0_qspi_look_up_logic is
   port (
-    douta : out STD_LOGIC_VECTOR ( 10 downto 0 );
+    douta : out STD_LOGIC_VECTOR ( 8 downto 0 );
     DTR_FIFO_Data_Exists_d1 : out STD_LOGIC;
     \qspi_cntrl_ps_reg[0]\ : out STD_LOGIC;
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ : out STD_LOGIC;
-    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg\ : out STD_LOGIC;
-    \qspi_cntrl_ps_reg[2]\ : out STD_LOGIC;
-    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg_0\ : out STD_LOGIC;
     \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\ : out STD_LOGIC;
+    \qspi_cntrl_ps_reg[2]\ : out STD_LOGIC;
     QSPI_IO1_T : out STD_LOGIC;
+    QSPI_IO0_T : out STD_LOGIC;
+    \qspi_cntrl_ps_reg[1]\ : out STD_LOGIC;
+    D : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    \p_32_out__0\ : out STD_LOGIC;
+    \p_34_out__0\ : out STD_LOGIC;
+    E : out STD_LOGIC_VECTOR ( 0 to 0 );
+    Serial_Dout_019_in : out STD_LOGIC;
+    \mode_1__2\ : out STD_LOGIC;
+    \mode_0__2\ : out STD_LOGIC;
+    \p_36_out__0\ : out STD_LOGIC;
     transfer_start_reg : out STD_LOGIC;
-    \IO0_T_control0__0\ : out STD_LOGIC;
     ext_spi_clk : in STD_LOGIC;
     Rst_to_spi : in STD_LOGIC;
     R : in STD_LOGIC;
     CE : in STD_LOGIC;
     dout : in STD_LOGIC_VECTOR ( 7 downto 0 );
     p_2_out : in STD_LOGIC;
-    p_1_out : in STD_LOGIC;
     SPIXfer_done_int_pulse : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 2 downto 0 );
     empty : in STD_LOGIC;
-    \qspi_cntrl_ns131_out__3\ : in STD_LOGIC;
     \qspi_cntrl_ns129_out__3\ : in STD_LOGIC;
-    \gen_rd_a.douta_reg_reg\ : in STD_LOGIC;
     \master_tri_state_en_control1__1\ : in STD_LOGIC;
-    \qspi_cntrl_ns132_out__0\ : in STD_LOGIC;
+    \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ : in STD_LOGIC;
+    io1_i_sync : in STD_LOGIC;
+    io0_i_sync : in STD_LOGIC;
+    io2_i_sync : in STD_LOGIC;
+    \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    io3_i_sync : in STD_LOGIC;
+    sck_d3 : in STD_LOGIC;
+    \gen_rd_a.douta_reg_reg\ : in STD_LOGIC;
+    \qspi_cntrl_ps_reg[1]_0\ : in STD_LOGIC;
+    \gen_rd_a.douta_reg_reg_0\ : in STD_LOGIC;
+    \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
     SPIXfer_done_int : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -16164,33 +16104,35 @@ end mb_design_axi_quad_spi_0_0_qspi_look_up_logic;
 architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_look_up_logic is
   signal CMD_decoded_int : STD_LOGIC;
   signal CMD_decoded_int_d1 : STD_LOGIC;
-  signal \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
-  signal \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
-  signal \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
-  signal \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
-  signal \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
-  signal \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
-  signal \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
-  signal \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
+  signal \^dtr_fifo_data_exists_d1\ : STD_LOGIC;
+  signal \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
+  signal \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
+  signal \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
+  signal \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
+  signal \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
+  signal \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
+  signal \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
+  signal \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I__0\ : STD_LOGIC;
   attribute box_type : string;
-  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
-  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
-  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
-  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
-  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
-  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
-  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
-  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
+  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
+  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
+  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
+  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
+  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
+  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
+  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
+  attribute box_type of \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ : label is "PRIMITIVE";
 begin
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_d1_reg\: unisim.vcomponents.FDRE
+  DTR_FIFO_Data_Exists_d1 <= \^dtr_fifo_data_exists_d1\;
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.CMD_decoded_int_d1_reg\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => '1',
-      D => p_1_out,
+      D => \^dtr_fifo_data_exists_d1\,
       Q => CMD_decoded_int_d1,
       R => Rst_to_spi
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_reg\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.CMD_decoded_int_reg\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => '1',
@@ -16198,15 +16140,15 @@ begin
       Q => CMD_decoded_int,
       R => Rst_to_spi
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.DTR_FIFO_Data_Exists_d1_reg\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.DTR_FIFO_Data_Exists_d1_reg\: unisim.vcomponents.FDRE
      port map (
       C => ext_spi_clk,
       CE => '1',
       D => p_2_out,
-      Q => DTR_FIFO_Data_Exists_d1,
+      Q => \^dtr_fifo_data_exists_d1\,
       R => Rst_to_spi
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
       IS_C_INVERTED => '0',
@@ -16217,10 +16159,10 @@ begin
       C => ext_spi_clk,
       CE => CE,
       D => dout(7),
-      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I__0\,
       R => R
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
       IS_C_INVERTED => '0',
@@ -16231,10 +16173,10 @@ begin
       C => ext_spi_clk,
       CE => CE,
       D => dout(6),
-      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I__0\,
       R => R
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
       IS_C_INVERTED => '0',
@@ -16245,10 +16187,10 @@ begin
       C => ext_spi_clk,
       CE => CE,
       D => dout(5),
-      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I__0\,
       R => R
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
       IS_C_INVERTED => '0',
@@ -16259,10 +16201,10 @@ begin
       C => ext_spi_clk,
       CE => CE,
       D => dout(4),
-      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I__0\,
       R => R
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
       IS_C_INVERTED => '0',
@@ -16273,10 +16215,10 @@ begin
       C => ext_spi_clk,
       CE => CE,
       D => dout(3),
-      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I__0\,
       R => R
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
       IS_C_INVERTED => '0',
@@ -16287,10 +16229,10 @@ begin
       C => ext_spi_clk,
       CE => CE,
       D => dout(2),
-      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I__0\,
       R => R
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
       IS_C_INVERTED => '0',
@@ -16301,10 +16243,10 @@ begin
       C => ext_spi_clk,
       CE => CE,
       D => dout(1),
-      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I__0\,
       R => R
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
       IS_C_INVERTED => '0',
@@ -16315,40 +16257,55 @@ begin
       C => ext_spi_clk,
       CE => CE,
       D => dout(0),
-      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      Q => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I__0\,
       R => R
     );
-\QSPI_LOOK_UP_MODE_2_MEMORY_3.xpm_mem_gen_QSPI_LOOK_UP_MODE_2_MEMORY_3.xpm_memory_inst\: entity work.mb_design_axi_quad_spi_0_0_xpm_memory_sprom
+\QSPI_LOOK_UP_MODE_2_MEMORY_1.xpm_mem_gen_QSPI_LOOK_UP_MODE_2_MEMORY_1.xpm_memory_inst\: entity work.mb_design_axi_quad_spi_0_0_xpm_memory_sprom
      port map (
       CMD_decoded_int => CMD_decoded_int,
+      D(2 downto 0) => D(2 downto 0),
+      E(0) => E(0),
       \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\,
-      \IO0_T_control0__0\ => \IO0_T_control0__0\,
+      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ => \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\,
       Q(2 downto 0) => Q(2 downto 0),
+      QSPI_IO0_T => QSPI_IO0_T,
       QSPI_IO1_T => QSPI_IO1_T,
       \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\ => \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\,
-      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg\ => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg\,
-      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg_0\ => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg_0\,
+      \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(2 downto 0) => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(2 downto 0),
+      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_reg\ => \mode_0__2\,
+      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg\ => \mode_1__2\,
+      \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[4]\ => \p_32_out__0\,
+      \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\(2 downto 0) => \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\(2 downto 0),
       Rst_to_spi => Rst_to_spi,
       SPIXfer_done_int => SPIXfer_done_int,
       SPIXfer_done_int_pulse => SPIXfer_done_int_pulse,
-      addra(7) => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I__0\,
-      addra(6) => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I__0\,
-      addra(5) => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I__0\,
-      addra(4) => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I__0\,
-      addra(3) => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I__0\,
-      addra(2) => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I__0\,
-      addra(1) => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I__0\,
-      addra(0) => \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I__0\,
-      douta(10 downto 0) => douta(10 downto 0),
+      Serial_Dout_019_in => Serial_Dout_019_in,
+      addra(7) => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[0].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      addra(6) => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[1].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      addra(5) => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[2].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      addra(4) => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[3].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      addra(3) => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[4].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      addra(2) => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[5].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      addra(1) => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[6].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      addra(0) => \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I__0\,
+      douta(8 downto 0) => douta(8 downto 0),
       empty => empty,
       ext_spi_clk => ext_spi_clk,
       \gen_rd_a.douta_reg_reg\ => \gen_rd_a.douta_reg_reg\,
+      \gen_rd_a.douta_reg_reg_0\ => \gen_rd_a.douta_reg_reg_0\,
+      io0_i_sync => io0_i_sync,
+      io1_i_sync => io1_i_sync,
+      io2_i_sync => io2_i_sync,
+      io3_i_sync => io3_i_sync,
       \master_tri_state_en_control1__1\ => \master_tri_state_en_control1__1\,
+      \p_34_out__0\ => \p_34_out__0\,
+      \p_36_out__0\ => \p_36_out__0\,
       \qspi_cntrl_ns129_out__3\ => \qspi_cntrl_ns129_out__3\,
-      \qspi_cntrl_ns131_out__3\ => \qspi_cntrl_ns131_out__3\,
-      \qspi_cntrl_ns132_out__0\ => \qspi_cntrl_ns132_out__0\,
       \qspi_cntrl_ps_reg[0]\ => \qspi_cntrl_ps_reg[0]\,
+      \qspi_cntrl_ps_reg[1]\ => \qspi_cntrl_ps_reg[1]\,
+      \qspi_cntrl_ps_reg[1]_0\ => \qspi_cntrl_ps_reg[1]_0\,
       \qspi_cntrl_ps_reg[2]\ => \qspi_cntrl_ps_reg[2]\,
+      sck_d3 => sck_d3,
       transfer_start_reg => transfer_start_reg
     );
 end STRUCTURE;
@@ -19712,8 +19669,8 @@ entity mb_design_axi_quad_spi_0_0_xpm_fifo_async is
     D : out STD_LOGIC_VECTOR ( 1 downto 0 );
     \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[28]\ : out STD_LOGIC;
     \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[30]\ : out STD_LOGIC;
-    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_reg\ : out STD_LOGIC;
-    \qspi_cntrl_ns132_out__0\ : out STD_LOGIC;
+    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_reg\ : out STD_LOGIC;
+    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[7]\ : out STD_LOGIC_VECTOR ( 0 to 0 );
     rst : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
     s_axi_wdata : in STD_LOGIC_VECTOR ( 7 downto 0 );
@@ -19731,9 +19688,12 @@ entity mb_design_axi_quad_spi_0_0_xpm_fifo_async is
     rd_data_count : in STD_LOGIC_VECTOR ( 1 downto 0 );
     p_3_in_0 : in STD_LOGIC;
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : in STD_LOGIC;
-    \p_36_out__0\ : in STD_LOGIC;
-    \p_34_out__0\ : in STD_LOGIC;
-    douta : in STD_LOGIC_VECTOR ( 0 to 0 )
+    \mode_0__2\ : in STD_LOGIC;
+    \mode_1__2\ : in STD_LOGIC;
+    \p_3_out__0\ : in STD_LOGIC;
+    io1_i_sync : in STD_LOGIC;
+    \p_32_out__0\ : in STD_LOGIC;
+    io0_i_sync : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of mb_design_axi_quad_spi_0_0_xpm_fifo_async : entity is "xpm_fifo_async";
@@ -19746,7 +19706,6 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_xpm_fifo_async is
   signal Tx_FIFO_occ_Reversed : STD_LOGIC_VECTOR ( 4 downto 1 );
   signal \^almost_full\ : STD_LOGIC;
   signal \^dout\ : STD_LOGIC_VECTOR ( 7 downto 0 );
-  signal \^empty\ : STD_LOGIC;
   signal full : STD_LOGIC;
   signal \gnuram_async_fifo.xpm_fifo_base_inst_n_11\ : STD_LOGIC;
   signal \gnuram_async_fifo.xpm_fifo_base_inst_n_2\ : STD_LOGIC;
@@ -19875,7 +19834,6 @@ begin
   \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[28]\ <= \^legacy_md_ip2bus_data_gen.ip2bus_data_reg[28]\;
   almost_full <= \^almost_full\;
   dout(7 downto 0) <= \^dout\(7 downto 0);
-  empty <= \^empty\;
   wr_data_count(0) <= \^wr_data_count\(0);
 \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data[28]_i_1\: unisim.vcomponents.LUT6
     generic map(
@@ -19939,26 +19897,29 @@ begin
       I5 => rd_data_count(1),
       O => \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[30]\
     );
-QSPI_IO0_T_i_5: unisim.vcomponents.LUT2
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"2"
+      INIT => X"AACFAAC0"
     )
         port map (
-      I0 => \^empty\,
-      I1 => douta(0),
-      O => \qspi_cntrl_ns132_out__0\
-    );
-\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_i_2\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"FFE400E4"
-    )
-        port map (
-      I0 => \p_36_out__0\,
-      I1 => \^dout\(4),
-      I2 => \^dout\(6),
-      I3 => \p_34_out__0\,
+      I0 => \^dout\(4),
+      I1 => \^dout\(6),
+      I2 => \mode_0__2\,
+      I3 => \mode_1__2\,
       I4 => \^dout\(7),
-      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_reg\
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_reg\
+    );
+\RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg[7]_i_1\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"B8BBB888"
+    )
+        port map (
+      I0 => \^dout\(0),
+      I1 => \p_3_out__0\,
+      I2 => io1_i_sync,
+      I3 => \p_32_out__0\,
+      I4 => io0_i_sync,
+      O => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[7]\(0)
     );
 \gnuram_async_fifo.xpm_fifo_base_inst\: entity work.mb_design_axi_quad_spi_0_0_xpm_fifo_base
      port map (
@@ -19968,7 +19929,7 @@ QSPI_IO0_T_i_5: unisim.vcomponents.LUT2
       dbiterr => \gnuram_async_fifo.xpm_fifo_base_inst_n_32\,
       din(7 downto 0) => s_axi_wdata(7 downto 0),
       dout(7 downto 0) => \^dout\(7 downto 0),
-      empty => \^empty\,
+      empty => empty,
       full => full,
       full_n => \NLW_gnuram_async_fifo.xpm_fifo_base_inst_full_n_UNCONNECTED\,
       injectdbiterr => '0',
@@ -20329,8 +20290,8 @@ entity mb_design_axi_quad_spi_0_0_async_fifo_fg is
     D : out STD_LOGIC_VECTOR ( 1 downto 0 );
     \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[28]\ : out STD_LOGIC;
     \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[30]\ : out STD_LOGIC;
-    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_reg\ : out STD_LOGIC;
-    \qspi_cntrl_ns132_out__0\ : out STD_LOGIC;
+    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_reg\ : out STD_LOGIC;
+    \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[7]\ : out STD_LOGIC_VECTOR ( 0 to 0 );
     rst : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
     s_axi_wdata : in STD_LOGIC_VECTOR ( 7 downto 0 );
@@ -20348,9 +20309,12 @@ entity mb_design_axi_quad_spi_0_0_async_fifo_fg is
     rd_data_count : in STD_LOGIC_VECTOR ( 1 downto 0 );
     p_3_in_0 : in STD_LOGIC;
     \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4\ : in STD_LOGIC;
-    \p_36_out__0\ : in STD_LOGIC;
-    \p_34_out__0\ : in STD_LOGIC;
-    douta : in STD_LOGIC_VECTOR ( 0 to 0 )
+    \mode_0__2\ : in STD_LOGIC;
+    \mode_1__2\ : in STD_LOGIC;
+    \p_3_out__0\ : in STD_LOGIC;
+    io1_i_sync : in STD_LOGIC;
+    \p_32_out__0\ : in STD_LOGIC;
+    io0_i_sync : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of mb_design_axi_quad_spi_0_0_async_fifo_fg : entity is "async_fifo_fg";
@@ -20370,20 +20334,23 @@ begin
       \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[28]\ => \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[28]\,
       \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[30]\ => \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[30]\,
       Q(0) => Q(0),
-      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_reg\ => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_reg\,
+      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_reg\ => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_reg\,
+      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[7]\(0) => \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[7]\(0),
       almost_full => almost_full,
       dout(7 downto 0) => dout(7 downto 0),
-      douta(0) => douta(0),
       empty => empty,
       ext_spi_clk => ext_spi_clk,
       \grdc.rd_data_count_i_reg[2]\ => \grdc.rd_data_count_i_reg[2]\,
       \grdc.rd_data_count_i_reg[3]\ => \grdc.rd_data_count_i_reg[3]\,
+      io0_i_sync => io0_i_sync,
+      io1_i_sync => io1_i_sync,
       ip2Bus_WrAck_core_reg_1 => ip2Bus_WrAck_core_reg_1,
-      \p_34_out__0\ => \p_34_out__0\,
-      \p_36_out__0\ => \p_36_out__0\,
+      \mode_0__2\ => \mode_0__2\,
+      \mode_1__2\ => \mode_1__2\,
+      \p_32_out__0\ => \p_32_out__0\,
       p_3_in_0 => p_3_in_0,
+      \p_3_out__0\ => \p_3_out__0\,
       p_6_in => p_6_in,
-      \qspi_cntrl_ns132_out__0\ => \qspi_cntrl_ns132_out__0\,
       rd_data_count(1 downto 0) => rd_data_count(1 downto 0),
       rd_en => rd_en,
       rst => rst,
@@ -20564,8 +20531,6 @@ entity mb_design_axi_quad_spi_0_0_qspi_core_interface is
     \CONTROL_REG_3_4_GENERATE[4].SPICR_data_int_reg[4]\ : in STD_LOGIC;
     \CONTROL_REG_3_4_GENERATE[3].SPICR_data_int_reg[3]\ : in STD_LOGIC;
     Bus_RNW_reg_reg_2 : in STD_LOGIC;
-    io2_i_sync : in STD_LOGIC;
-    io3_i_sync : in STD_LOGIC;
     Bus_RNW_reg_reg_3 : in STD_LOGIC;
     irpt_wrack_d1_reg : in STD_LOGIC;
     Bus_RNW_reg_reg_4 : in STD_LOGIC;
@@ -20585,6 +20550,8 @@ entity mb_design_axi_quad_spi_0_0_qspi_core_interface is
     p_4_in : in STD_LOGIC;
     E : in STD_LOGIC_VECTOR ( 0 to 0 );
     io1_i_sync : in STD_LOGIC;
+    io2_i_sync : in STD_LOGIC;
+    io3_i_sync : in STD_LOGIC;
     io0_i_sync : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -20603,7 +20570,6 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_core_interface is
   signal CONTROL_REG_I_n_15 : STD_LOGIC;
   signal DTR_FIFO_Data_Exists_d1 : STD_LOGIC;
   signal D_0 : STD_LOGIC;
-  signal Data_Dir_int : STD_LOGIC;
   signal Data_Mode_0_int : STD_LOGIC;
   signal Data_Mode_1_int : STD_LOGIC;
   signal Data_Phase_int : STD_LOGIC;
@@ -20623,11 +20589,11 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_core_interface is
   signal \FIFO_EXISTS.TX_FIFO_EMPTY_CNTR_I_n_3\ : STD_LOGIC;
   signal \FIFO_EXISTS.TX_FIFO_II_n_14\ : STD_LOGIC;
   signal \FIFO_EXISTS.TX_FIFO_II_n_16\ : STD_LOGIC;
+  signal \FIFO_EXISTS.TX_FIFO_II_n_17\ : STD_LOGIC;
   signal \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_in_cdc_to\ : STD_LOGIC;
   signal \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_in_cdc_to_0\ : STD_LOGIC;
   signal \^generate_level_p_s_cdc.single_bit.cross_plevel_in2scndry_in_cdc_to_1\ : STD_LOGIC;
   signal \^gen_ip_irpt_status_reg[0].gen_reg_status.ip_irpt_status_reg_reg[0]\ : STD_LOGIC;
-  signal \IO0_T_control0__0\ : STD_LOGIC;
   signal IP2Bus_RdAck_1 : STD_LOGIC;
   signal IP2Bus_WrAck_1 : STD_LOGIC;
   signal IP2Bus_WrAck_transmit_enable : STD_LOGIC;
@@ -20636,15 +20602,21 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_core_interface is
   signal \LEGACY_MD_WR_RD_ACK_GEN.read_ack_delay_5_reg_NO_DUAL_QUAD_MODE.QSPI_NORMAL_QSPI_LEGACY_MD_GEN.QSPI_CORE_INTERFACE_I_LOGIC_FOR_MD_12_GEN.SCK_MISO_STARTUP_USED.QSPI_STARTUP_BLOCK_I_pipe_signal_reg_r_3_n_0\ : STD_LOGIC;
   signal \LEGACY_MD_WR_RD_ACK_GEN.read_ack_delay_5_reg_gate_n_0\ : STD_LOGIC;
   signal \LOGIC_FOR_MD_12_GEN.SCK_MISO_STARTUP_USED.QSPI_STARTUP_BLOCK_I_n_0\ : STD_LOGIC;
+  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_10\ : STD_LOGIC;
   signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_12\ : STD_LOGIC;
+  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_13\ : STD_LOGIC;
   signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_14\ : STD_LOGIC;
   signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_15\ : STD_LOGIC;
   signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_16\ : STD_LOGIC;
-  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_17\ : STD_LOGIC;
-  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_18\ : STD_LOGIC;
-  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_19\ : STD_LOGIC;
+  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_22\ : STD_LOGIC;
+  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_27\ : STD_LOGIC;
   signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_29\ : STD_LOGIC;
-  signal Quad_Phase_int : STD_LOGIC;
+  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_30\ : STD_LOGIC;
+  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_31\ : STD_LOGIC;
+  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_35\ : STD_LOGIC;
+  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_36\ : STD_LOGIC;
+  signal \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_37\ : STD_LOGIC;
+  signal \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\ : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal R : STD_LOGIC;
   signal \RATIO_OF_2_GENERATE.Count_reg__0\ : STD_LOGIC_VECTOR ( 4 to 4 );
   signal Receive_ip2bus_error0 : STD_LOGIC;
@@ -20671,6 +20643,7 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_core_interface is
   signal SPIXfer_done_int : STD_LOGIC;
   signal SPIXfer_done_int_pulse : STD_LOGIC;
   signal SPIXfer_done_rd_tx_en : STD_LOGIC;
+  signal Serial_Dout_019_in : STD_LOGIC;
   signal Tx_FIFO_Empty_intr : STD_LOGIC;
   signal Tx_FIFO_occ_Reversed : STD_LOGIC_VECTOR ( 0 to 0 );
   signal bus2IP_Data_for_interrupt_core : STD_LOGIC_VECTOR ( 23 to 23 );
@@ -20690,6 +20663,8 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_core_interface is
   signal ip2Bus_WrAck_intr_reg_hole : STD_LOGIC;
   signal \^ip_irpt_enable_reg_reg[8]\ : STD_LOGIC;
   signal \master_tri_state_en_control1__1\ : STD_LOGIC;
+  signal \mode_0__2\ : STD_LOGIC;
+  signal \mode_1__2\ : STD_LOGIC;
   signal modf_strobe_int : STD_LOGIC;
   signal p_0_in1_in : STD_LOGIC;
   signal p_0_in4_in : STD_LOGIC;
@@ -20698,14 +20673,13 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_core_interface is
   signal \^p_1_in17_in\ : STD_LOGIC;
   signal \^p_1_in23_in\ : STD_LOGIC;
   signal p_1_in29_in : STD_LOGIC;
-  signal p_1_out : STD_LOGIC;
   signal p_2_out : STD_LOGIC;
+  signal \p_32_out__0\ : STD_LOGIC;
   signal \p_34_out__0\ : STD_LOGIC;
   signal \p_36_out__0\ : STD_LOGIC;
+  signal \p_3_out__0\ : STD_LOGIC;
   signal \^prmry_in\ : STD_LOGIC;
   signal \qspi_cntrl_ns129_out__3\ : STD_LOGIC;
-  signal \qspi_cntrl_ns131_out__3\ : STD_LOGIC;
-  signal \qspi_cntrl_ns132_out__0\ : STD_LOGIC;
   signal qspi_cntrl_ps : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal rc_FIFO_Full_d1 : STD_LOGIC;
   signal \^rc_fifo_full_d1_reg\ : STD_LOGIC;
@@ -20716,6 +20690,8 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0_qspi_core_interface is
   signal rst_to_spi_int : STD_LOGIC;
   signal \^rx_fifo_empty_i\ : STD_LOGIC;
   signal rx_fifo_reset : STD_LOGIC;
+  signal rx_shft_reg_mode_0011 : STD_LOGIC_VECTOR ( 4 to 7 );
+  signal sck_d3 : STD_LOGIC;
   signal \^scndry_out\ : STD_LOGIC;
   signal spiXfer_done_d2 : STD_LOGIC;
   signal spiXfer_done_d3 : STD_LOGIC;
@@ -20830,8 +20806,8 @@ CONTROL_REG_I: entity work.mb_design_axi_quad_spi_0_0_qspi_cntrl_reg
       MODF_strobe_reg => SPICR_2_MST_N_SLV_to_spi_clk,
       MST_TRANS_INHIBIT_D1_I => spicr_8_tr_inhibit_to_spi_clk,
       Q(0) => \RATIO_OF_2_GENERATE.Count_reg__0\(4),
-      \QSPI_LOOK_UP_MODE_2_MEMORY_3.CMD_decoded_int_reg\ => SPISR_0_CMD_Error_int,
-      \QSPI_LOOK_UP_MODE_2_MEMORY_3.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ => spicr_5_txfifo_to_spi_clk,
+      \QSPI_LOOK_UP_MODE_2_MEMORY_1.CMD_decoded_int_reg\ => SPISR_0_CMD_Error_int,
+      \QSPI_LOOK_UP_MODE_2_MEMORY_1.TXFIFO_ADDR_BITS_GENERATE[7].TXFIFO_FIRST_ENTRY_REG_I\ => spicr_5_txfifo_to_spi_clk,
       QSPI_SCK_T => sr_3_modf_to_spi_clk,
       \RATIO_OF_2_GENERATE.Count_reg[4]\ => spicr_3_cpol_to_spi_clk,
       \RATIO_OF_2_GENERATE.Count_reg[4]_0\ => spicr_4_cpha_to_spi_clk,
@@ -20844,7 +20820,7 @@ CONTROL_REG_I: entity work.mb_design_axi_quad_spi_0_0_qspi_cntrl_reg
       drr_Overrun_int => drr_Overrun_int,
       empty => tx_fifo_empty,
       ext_spi_clk => ext_spi_clk,
-      \gen_rd_a.douta_reg_reg\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_19\,
+      \gen_rd_a.douta_reg_reg\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_27\,
       \icount_out_reg[3]\ => \FIFO_EXISTS.CLK_CROSS_I_n_6\,
       \ip_irpt_enable_reg_reg[8]\ => \^ip_irpt_enable_reg_reg[8]\,
       irpt_wrack_d1_reg => irpt_wrack_d1_reg,
@@ -21034,7 +21010,8 @@ CONTROL_REG_I: entity work.mb_design_axi_quad_spi_0_0_qspi_cntrl_reg
       \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[28]\ => \FIFO_EXISTS.TX_FIFO_II_n_14\,
       \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[30]\ => \LEGACY_MD_IP2BUS_DATA_GEN.IP2Bus_Data_reg[30]_0\,
       Q(0) => p_0_in4_in,
-      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_0_reg\ => \FIFO_EXISTS.TX_FIFO_II_n_16\,
+      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_0_reg\ => \FIFO_EXISTS.TX_FIFO_II_n_16\,
+      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Shift_Reg_reg[7]\(0) => \FIFO_EXISTS.TX_FIFO_II_n_17\,
       almost_full => almost_full,
       dout(7) => data_from_txfifo(0),
       dout(6) => data_from_txfifo(1),
@@ -21044,17 +21021,19 @@ CONTROL_REG_I: entity work.mb_design_axi_quad_spi_0_0_qspi_cntrl_reg
       dout(2) => data_from_txfifo(5),
       dout(1) => data_from_txfifo(6),
       dout(0) => data_from_txfifo(7),
-      douta(0) => Data_Phase_int,
       empty => tx_fifo_empty,
       ext_spi_clk => ext_spi_clk,
       \grdc.rd_data_count_i_reg[2]\ => \FIFO_EXISTS.RX_FIFO_II_n_14\,
       \grdc.rd_data_count_i_reg[3]\ => \FIFO_EXISTS.RX_FIFO_II_n_15\,
+      io0_i_sync => io0_i_sync,
+      io1_i_sync => io1_i_sync,
       ip2Bus_WrAck_core_reg_1 => \^ip2bus_wrack_core_reg_1\,
-      \p_34_out__0\ => \p_34_out__0\,
-      \p_36_out__0\ => \p_36_out__0\,
+      \mode_0__2\ => \mode_0__2\,
+      \mode_1__2\ => \mode_1__2\,
+      \p_32_out__0\ => \p_32_out__0\,
       p_3_in_0 => p_3_in_0,
+      \p_3_out__0\ => \p_3_out__0\,
       p_6_in => p_6_in,
-      \qspi_cntrl_ns132_out__0\ => \qspi_cntrl_ns132_out__0\,
       rd_data_count(1 downto 0) => Rx_FIFO_occ_Reversed(1 downto 0),
       rd_en => SPIXfer_done_rd_tx_en,
       rst => reset_TxFIFO_ptr_int,
@@ -21409,18 +21388,26 @@ INTERRUPT_CONTROL_I: entity work.mb_design_axi_quad_spi_0_0_interrupt_control
 \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I\: entity work.mb_design_axi_quad_spi_0_0_qspi_look_up_logic
      port map (
       CE => CE,
+      D(2) => rx_shft_reg_mode_0011(4),
+      D(1) => rx_shft_reg_mode_0011(5),
+      D(0) => rx_shft_reg_mode_0011(7),
       DTR_FIFO_Data_Exists_d1 => DTR_FIFO_Data_Exists_d1,
+      E(0) => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_22\,
       \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ => SPISR_0_CMD_Error_int,
-      \IO0_T_control0__0\ => \IO0_T_control0__0\,
+      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ => register_Data_slvsel_int,
       Q(2 downto 0) => qspi_cntrl_ps(2 downto 0),
-      QSPI_IO1_T => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_18\,
-      \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_17\,
+      QSPI_IO0_T => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_15\,
+      QSPI_IO1_T => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_14\,
+      \QSPI_MODE_2_T_CONTROL.QSPI_IO3_T\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_12\,
+      \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(2 downto 0) => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(2 downto 0),
       R => R,
-      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_14\,
-      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_SP_MEM_GEN.Serial_Dout_3_reg_0\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_16\,
+      \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\(2) => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_29\,
+      \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\(1) => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_30\,
+      \RATIO_OF_2_GENERATE.rx_shft_reg_mode_0011_reg[5]\(0) => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_31\,
       Rst_to_spi => rst_to_spi_int,
       SPIXfer_done_int => SPIXfer_done_int,
       SPIXfer_done_int_pulse => SPIXfer_done_int_pulse,
+      Serial_Dout_019_in => Serial_Dout_019_in,
       dout(7) => data_from_txfifo(0),
       dout(6) => data_from_txfifo(1),
       dout(5) => data_from_txfifo(2),
@@ -21429,11 +21416,9 @@ INTERRUPT_CONTROL_I: entity work.mb_design_axi_quad_spi_0_0_interrupt_control
       dout(2) => data_from_txfifo(5),
       dout(1) => data_from_txfifo(6),
       dout(0) => data_from_txfifo(7),
-      douta(10) => Data_Dir_int,
-      douta(9) => Data_Mode_1_int,
-      douta(8) => Data_Mode_0_int,
-      douta(7) => Data_Phase_int,
-      douta(6) => Quad_Phase_int,
+      douta(8) => Data_Mode_1_int,
+      douta(7) => Data_Mode_0_int,
+      douta(6) => Data_Phase_int,
       douta(5) => Addr_Mode_1_int,
       douta(4) => Addr_Mode_0_int,
       douta(3) => Addr_Bit_int,
@@ -21442,23 +21427,36 @@ INTERRUPT_CONTROL_I: entity work.mb_design_axi_quad_spi_0_0_interrupt_control
       douta(0) => CMD_Mode_0_int,
       empty => tx_fifo_empty,
       ext_spi_clk => ext_spi_clk,
-      \gen_rd_a.douta_reg_reg\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_29\,
+      \gen_rd_a.douta_reg_reg\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_37\,
+      \gen_rd_a.douta_reg_reg_0\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_36\,
+      io0_i_sync => io0_i_sync,
+      io1_i_sync => io1_i_sync,
+      io2_i_sync => io2_i_sync,
+      io3_i_sync => io3_i_sync,
       \master_tri_state_en_control1__1\ => \master_tri_state_en_control1__1\,
-      p_1_out => p_1_out,
+      \mode_0__2\ => \mode_0__2\,
+      \mode_1__2\ => \mode_1__2\,
       p_2_out => p_2_out,
+      \p_32_out__0\ => \p_32_out__0\,
+      \p_34_out__0\ => \p_34_out__0\,
+      \p_36_out__0\ => \p_36_out__0\,
       \qspi_cntrl_ns129_out__3\ => \qspi_cntrl_ns129_out__3\,
-      \qspi_cntrl_ns131_out__3\ => \qspi_cntrl_ns131_out__3\,
-      \qspi_cntrl_ns132_out__0\ => \qspi_cntrl_ns132_out__0\,
-      \qspi_cntrl_ps_reg[0]\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_12\,
-      \qspi_cntrl_ps_reg[2]\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_15\,
-      transfer_start_reg => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_19\
+      \qspi_cntrl_ps_reg[0]\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_10\,
+      \qspi_cntrl_ps_reg[1]\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_16\,
+      \qspi_cntrl_ps_reg[1]_0\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_35\,
+      \qspi_cntrl_ps_reg[2]\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_13\,
+      sck_d3 => sck_d3,
+      transfer_start_reg => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_27\
     );
 \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I\: entity work.mb_design_axi_quad_spi_0_0_qspi_mode_control_logic
      port map (
       CE => CE,
-      D => D_0,
+      D(2) => rx_shft_reg_mode_0011(4),
+      D(1) => rx_shft_reg_mode_0011(5),
+      D(0) => rx_shft_reg_mode_0011(7),
       DTR_FIFO_Data_Exists_d1 => DTR_FIFO_Data_Exists_d1,
-      E(0) => \FIFO_EXISTS.CLK_CROSS_I_n_14\,
+      D_0 => D_0,
+      E(0) => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_22\,
       \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to\ => spisel_d1_reg,
       \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3\ => spicr_8_tr_inhibit_to_spi_clk,
       \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_0\ => register_Data_slvsel_int,
@@ -21466,29 +21464,34 @@ INTERRUPT_CONTROL_I: entity work.mb_design_axi_quad_spi_0_0_interrupt_control
       \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_2\ => spicr_3_cpol_to_spi_clk,
       \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_3\ => spicr_4_cpha_to_spi_clk,
       \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_4\ => sr_3_modf_to_spi_clk,
-      \IO0_T_control0__0\ => \IO0_T_control0__0\,
+      \GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3_5\(0) => \FIFO_EXISTS.CLK_CROSS_I_n_14\,
       Q(2 downto 0) => qspi_cntrl_ps(2 downto 0),
+      \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(2 downto 0) => \QSPI_QUAD_MODE_MIXED_WB_MEM_GEN.addr_cnt_reg__0\(2 downto 0),
       \RATIO_OF_2_GENERATE.Count_reg[4]_0\(0) => \RATIO_OF_2_GENERATE.Count_reg__0\(4),
+      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_1_reg_0\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_36\,
+      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg_0\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_35\,
+      \RATIO_OF_2_GENERATE.RATIO_2_CAP_QSPI_QUAD_MODE_OTHER_MEM_GEN.Serial_Dout_2_reg_1\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_37\,
       RESET_SYNC_AX2S_2 => \FIFO_EXISTS.CLK_CROSS_I_n_2\,
+      \RX_DATA_SCK_RATIO_2_GEN1.receive_Data_int_reg[3]_0\(2) => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_29\,
+      \RX_DATA_SCK_RATIO_2_GEN1.receive_Data_int_reg[3]_0\(1) => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_30\,
+      \RX_DATA_SCK_RATIO_2_GEN1.receive_Data_int_reg[3]_0\(0) => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_31\,
       Rst_to_spi => rst_to_spi_int,
       SCK_O_int => SCK_O_int,
       SPISEL_sync => SPISEL_sync,
       SPIXfer_done_int => SPIXfer_done_int,
       SPIXfer_done_int_pulse => SPIXfer_done_int_pulse,
+      Serial_Dout_019_in => Serial_Dout_019_in,
       almost_full => Rx_FIFO_Full_Fifo_org,
-      dout(7) => data_from_txfifo(0),
-      dout(6) => data_from_txfifo(1),
-      dout(5) => data_from_txfifo(2),
-      dout(4) => data_from_txfifo(3),
-      dout(3) => data_from_txfifo(4),
-      dout(2) => data_from_txfifo(5),
-      dout(1) => data_from_txfifo(6),
-      dout(0) => data_from_txfifo(7),
-      douta(10) => Data_Dir_int,
-      douta(9) => Data_Mode_1_int,
-      douta(8) => Data_Mode_0_int,
-      douta(7) => Data_Phase_int,
-      douta(6) => Quad_Phase_int,
+      dout(6) => data_from_txfifo(0),
+      dout(5) => data_from_txfifo(1),
+      dout(4) => data_from_txfifo(2),
+      dout(3) => data_from_txfifo(3),
+      dout(2) => data_from_txfifo(4),
+      dout(1) => data_from_txfifo(5),
+      dout(0) => data_from_txfifo(6),
+      douta(8) => Data_Mode_1_int,
+      douta(7) => Data_Mode_0_int,
+      douta(6) => Data_Phase_int,
       douta(5) => Addr_Mode_1_int,
       douta(4) => Addr_Mode_0_int,
       douta(3) => Addr_Bit_int,
@@ -21498,12 +21501,12 @@ INTERRUPT_CONTROL_I: entity work.mb_design_axi_quad_spi_0_0_interrupt_control
       drr_Overrun_int => drr_Overrun_int,
       empty => tx_fifo_empty,
       ext_spi_clk => ext_spi_clk,
-      \gen_rd_a.douta_reg_reg\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_18\,
-      \gen_rd_a.douta_reg_reg_0\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_12\,
+      \gen_rd_a.douta_reg_reg\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_14\,
+      \gen_rd_a.douta_reg_reg_0\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_10\,
       \gen_rd_a.douta_reg_reg_1\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_16\,
-      \gen_rd_a.douta_reg_reg_2\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_14\,
-      \gen_rd_a.douta_reg_reg_3\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_15\,
-      \gen_rd_a.douta_reg_reg_4\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_17\,
+      \gen_rd_a.douta_reg_reg_2\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_13\,
+      \gen_rd_a.douta_reg_reg_3\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_12\,
+      \gen_rd_a.douta_reg_reg_4\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_1_LUT_LOGIC_I_n_15\,
       \gen_rd_b.doutb_reg_reg[7]\(7) => data_to_rx_fifo(0),
       \gen_rd_b.doutb_reg_reg[7]\(6) => data_to_rx_fifo(1),
       \gen_rd_b.doutb_reg_reg[7]\(5) => data_to_rx_fifo(2),
@@ -21512,8 +21515,8 @@ INTERRUPT_CONTROL_I: entity work.mb_design_axi_quad_spi_0_0_interrupt_control
       \gen_rd_b.doutb_reg_reg[7]\(2) => data_to_rx_fifo(5),
       \gen_rd_b.doutb_reg_reg[7]\(1) => data_to_rx_fifo(6),
       \gen_rd_b.doutb_reg_reg[7]\(0) => data_to_rx_fifo(7),
+      \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][0]\(0) => \FIFO_EXISTS.TX_FIFO_II_n_17\,
       \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][4]\ => \FIFO_EXISTS.TX_FIFO_II_n_16\,
-      io0_i_sync => io0_i_sync,
       io0_o => io0_o,
       io0_t => io0_t,
       io1_i_sync => io1_i_sync,
@@ -21525,16 +21528,17 @@ INTERRUPT_CONTROL_I: entity work.mb_design_axi_quad_spi_0_0_interrupt_control
       io3_i_sync => io3_i_sync,
       io3_o => io3_o,
       io3_t => io3_t,
+      \mode_0__2\ => \mode_0__2\,
+      \mode_1__2\ => \mode_1__2\,
       modf_strobe_int => modf_strobe_int,
-      p_1_out => p_1_out,
       p_2_out => p_2_out,
+      \p_32_out__0\ => \p_32_out__0\,
       \p_34_out__0\ => \p_34_out__0\,
       \p_36_out__0\ => \p_36_out__0\,
+      \p_3_out__0\ => \p_3_out__0\,
       \qspi_cntrl_ns129_out__3\ => \qspi_cntrl_ns129_out__3\,
-      \qspi_cntrl_ns131_out__3\ => \qspi_cntrl_ns131_out__3\,
-      \qspi_cntrl_ns132_out__0\ => \qspi_cntrl_ns132_out__0\,
-      \qspi_cntrl_ps_reg[2]_0\ => \LOGIC_FOR_MD_12_GEN.SPI_MODE_CONTROL_LOGIC_I_n_29\,
       rd_en => SPIXfer_done_rd_tx_en,
+      sck_d3 => sck_d3,
       sck_t => sck_t,
       scndry_out => Rx_FIFO_Empty_Synced_in_SPI_domain,
       spicr_bits_7_8_to_spi_clk(0 to 1) => spicr_bits_7_8_to_spi_clk(0 to 1),
@@ -21622,7 +21626,6 @@ use UNISIM.VCOMPONENTS.ALL;
 entity mb_design_axi_quad_spi_0_0_axi_quad_spi_top is
   port (
     io2_o : out STD_LOGIC;
-    io1_o : out STD_LOGIC;
     ss_t : out STD_LOGIC;
     sck_t : out STD_LOGIC;
     io0_t : out STD_LOGIC;
@@ -21642,6 +21645,7 @@ entity mb_design_axi_quad_spi_0_0_axi_quad_spi_top is
     s_axi_rvalid : out STD_LOGIC;
     ip2intc_irpt : out STD_LOGIC;
     io0_o : out STD_LOGIC;
+    io1_o : out STD_LOGIC;
     io3_o : out STD_LOGIC;
     s_axi_bresp : out STD_LOGIC_VECTOR ( 0 to 0 );
     s_axi_aclk : in STD_LOGIC;
@@ -22257,7 +22261,7 @@ entity mb_design_axi_quad_spi_0_0_axi_quad_spi is
   attribute C_SHARED_STARTUP : integer;
   attribute C_SHARED_STARTUP of mb_design_axi_quad_spi_0_0_axi_quad_spi : entity is 0;
   attribute C_SPI_MEMORY : integer;
-  attribute C_SPI_MEMORY of mb_design_axi_quad_spi_0_0_axi_quad_spi : entity is 3;
+  attribute C_SPI_MEMORY of mb_design_axi_quad_spi_0_0_axi_quad_spi : entity is 1;
   attribute C_SPI_MEM_ADDR_BITS : integer;
   attribute C_SPI_MEM_ADDR_BITS of mb_design_axi_quad_spi_0_0_axi_quad_spi : entity is 24;
   attribute C_SPI_MODE : integer;
@@ -22546,7 +22550,7 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0 is
   attribute C_SHARED_STARTUP : integer;
   attribute C_SHARED_STARTUP of U0 : label is 0;
   attribute C_SPI_MEMORY : integer;
-  attribute C_SPI_MEMORY of U0 : label is 3;
+  attribute C_SPI_MEMORY of U0 : label is 1;
   attribute C_SPI_MEM_ADDR_BITS : integer;
   attribute C_SPI_MEM_ADDR_BITS of U0 : label is 24;
   attribute C_SPI_MODE : integer;
@@ -22584,7 +22588,7 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0 is
   attribute x_interface_info of eos : signal is "xilinx.com:display_startup_io:startup_io:1.0 STARTUP_IO eos";
   attribute x_interface_info of ext_spi_clk : signal is "xilinx.com:signal:clock:1.0 spi_clk CLK";
   attribute x_interface_parameter : string;
-  attribute x_interface_parameter of ext_spi_clk : signal is "XIL_INTERFACENAME spi_clk, ASSOCIATED_BUSIF SPI_0, FREQ_HZ 50000000, PHASE 0.0, CLK_DOMAIN mb_design_clk_wiz_1_0_clk_out1";
+  attribute x_interface_parameter of ext_spi_clk : signal is "XIL_INTERFACENAME spi_clk, ASSOCIATED_BUSIF SPI_0, FREQ_HZ 50000000, PHASE 0.0, CLK_DOMAIN /clk_wiz_1_clk_out1";
   attribute x_interface_info of io0_i : signal is "xilinx.com:interface:spi:1.0 SPI_0 IO0_I";
   attribute x_interface_parameter of io0_i : signal is "XIL_INTERFACENAME SPI_0, BOARD.ASSOCIATED_PARAM QSPI_BOARD_INTERFACE";
   attribute x_interface_info of io0_o : signal is "xilinx.com:interface:spi:1.0 SPI_0 IO0_O";
@@ -22602,7 +22606,7 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0 is
   attribute x_interface_parameter of ip2intc_irpt : signal is "XIL_INTERFACENAME interrupt, SENSITIVITY EDGE_RISING, PortWidth 1";
   attribute x_interface_info of preq : signal is "xilinx.com:display_startup_io:startup_io:1.0 STARTUP_IO preq";
   attribute x_interface_info of s_axi_aclk : signal is "xilinx.com:signal:clock:1.0 lite_clk CLK";
-  attribute x_interface_parameter of s_axi_aclk : signal is "XIL_INTERFACENAME lite_clk, ASSOCIATED_BUSIF AXI_LITE, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN mb_design_clk_wiz_1_0_clk_out1";
+  attribute x_interface_parameter of s_axi_aclk : signal is "XIL_INTERFACENAME lite_clk, ASSOCIATED_BUSIF AXI_LITE, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 100000000, PHASE 0.0, CLK_DOMAIN /clk_wiz_1_clk_out1";
   attribute x_interface_info of s_axi_aresetn : signal is "xilinx.com:signal:reset:1.0 lite_reset RST";
   attribute x_interface_parameter of s_axi_aresetn : signal is "XIL_INTERFACENAME lite_reset, POLARITY ACTIVE_LOW";
   attribute x_interface_info of s_axi_arready : signal is "xilinx.com:interface:aximm:1.0 AXI_LITE ARREADY";
@@ -22618,7 +22622,7 @@ architecture STRUCTURE of mb_design_axi_quad_spi_0_0 is
   attribute x_interface_info of ss_t : signal is "xilinx.com:interface:spi:1.0 SPI_0 SS_T";
   attribute x_interface_info of s_axi_araddr : signal is "xilinx.com:interface:aximm:1.0 AXI_LITE ARADDR";
   attribute x_interface_info of s_axi_awaddr : signal is "xilinx.com:interface:aximm:1.0 AXI_LITE AWADDR";
-  attribute x_interface_parameter of s_axi_awaddr : signal is "XIL_INTERFACENAME AXI_LITE, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 7, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN mb_design_clk_wiz_1_0_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0";
+  attribute x_interface_parameter of s_axi_awaddr : signal is "XIL_INTERFACENAME AXI_LITE, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 7, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN /clk_wiz_1_clk_out1, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0";
   attribute x_interface_info of s_axi_bresp : signal is "xilinx.com:interface:aximm:1.0 AXI_LITE BRESP";
   attribute x_interface_info of s_axi_rdata : signal is "xilinx.com:interface:aximm:1.0 AXI_LITE RDATA";
   attribute x_interface_info of s_axi_rresp : signal is "xilinx.com:interface:aximm:1.0 AXI_LITE RRESP";

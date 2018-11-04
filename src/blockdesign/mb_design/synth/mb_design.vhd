@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Sat Nov  3 01:08:51 2018
+--Date        : Sun Nov  4 23:27:43 2018
 --Host        : dinne-Aspire-VN7-593G running 64-bit Ubuntu 16.04.4 LTS
 --Command     : generate_target mb_design.bd
 --Design      : mb_design
@@ -807,11 +807,11 @@ architecture STRUCTURE of mb_design is
   component mb_design_clk_wiz_1_0 is
   port (
     resetn : in STD_LOGIC;
+    clk_in1 : in STD_LOGIC;
     clk_out1 : out STD_LOGIC;
     clk_out2 : out STD_LOGIC;
     clk_out3 : out STD_LOGIC;
-    locked : out STD_LOGIC;
-    clk_in1 : in STD_LOGIC
+    locked : out STD_LOGIC
   );
   end component mb_design_clk_wiz_1_0;
   component mb_design_rst_clk_wiz_1_100M_0 is

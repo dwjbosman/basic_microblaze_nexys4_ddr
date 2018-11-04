@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
--- Date        : Fri Nov  2 23:34:44 2018
+-- Date        : Sat Nov  3 22:52:21 2018
 -- Host        : dinne-Aspire-VN7-593G running 64-bit Ubuntu 16.04.4 LTS
 -- Command     : write_vhdl -force -mode synth_stub
 --               /home/dinne/Xilinx/projects/basic_microblaze/src/blockdesign/mb_design/ip/mb_design_axi_quad_spi_0_0/mb_design_axi_quad_spi_0_0_stub.vhdl
