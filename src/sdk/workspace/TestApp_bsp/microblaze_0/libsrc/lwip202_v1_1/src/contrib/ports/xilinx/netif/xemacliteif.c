@@ -703,9 +703,16 @@ unsigned get_IEEE_phy_speed_emaclite(XEmacLite *xemaclitep)
 				IEEE_1000_ADVERTISE_REG_OFFSET,
 				0);
 	/* Advertise PHY speed of 100 and 10 Mbps */
+    /**
 	XEmacLite_PhyWrite(xemaclitep, phy_addr,
 				IEEE_AUTONEGO_ADVERTISE_REG,
 				ADVERTISE_100_AND_10);
+    **/
+    /* https://forums.xilinx.com/t5/Networking-and-Connectivity/lwip-library-fails-compile-with-ethernet-lite/m-p/874626 */
+    XEmacLite_PhyWrite(xemaclitep, phy_addr,
+                IEEE_AUTONEGO_ADVERTISE_REG,
+                (ADVERTISE_100_AND_10 | 0x0001));
+
 
 	XEmacLite_PhyRead(xemaclitep, phy_addr,
 				     IEEE_CONTROL_REG_OFFSET,
